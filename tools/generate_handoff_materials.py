@@ -139,11 +139,11 @@ def add_table(doc: Document, headers: list[str], rows: list[list[str]]) -> None:
 
 
 def build_handoff() -> Path:
-    path = OUT / "IRAC_CREAC_Highlighter_Handoff.docx"
+    path = OUT / "Legal_Writing_Structure_Coach_Handoff.docx"
     doc = Document()
     set_doc_defaults(doc)
 
-    title = doc.add_heading("IRAC/CREAC Structural Highlighter: Handoff", level=0)
+    title = doc.add_heading("Legal Writing Structure Coach: Handoff", level=0)
     title.alignment = WD_ALIGN_PARAGRAPH.CENTER
     subtitle = doc.add_paragraph("Offline form-feedback tool for 1L legal writing and practice exam answers")
     subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -244,10 +244,10 @@ def build_handoff() -> Path:
 
 
 def build_demo_docx() -> Path:
-    path = OUT / "IRAC_CREAC_Demo_Test_Document.docx"
+    path = OUT / "Legal_Writing_Structure_Coach_Demo_Test_Document.docx"
     doc = Document()
     set_doc_defaults(doc)
-    title = doc.add_heading("IRAC/CREAC Demo Test Document", level=0)
+    title = doc.add_heading("Legal Writing Structure Coach Demo Test Document", level=0)
     title.alignment = WD_ALIGN_PARAGRAPH.CENTER
     doc.add_paragraph(
         "Use this document to test DOCX upload. The same examples are also provided as paste text and as a text-based PDF. "
@@ -264,7 +264,7 @@ def build_demo_docx() -> Path:
 
 
 def build_paste_text() -> Path:
-    path = OUT / "IRAC_CREAC_Paste_Demo.txt"
+    path = OUT / "Legal_Writing_Structure_Coach_Paste_Demo.txt"
     parts = []
     for heading, framework, text, expected in DEMO_SECTIONS:
         parts.append(f"{heading}\nFramework: {framework}. {expected}\n{text}")
@@ -275,11 +275,11 @@ def build_paste_text() -> Path:
 def build_local_readme() -> Path:
     path = OUT / "LOCAL_BUILD_README.txt"
     path.write_text(
-        """IRAC/CREAC Structural Highlighter - Local Build
+        """Legal Writing Structure Coach - Local Build
 
 How to run
-1. Open the IRAC_CREAC_Highlighter folder.
-2. Double-click IRAC_CREAC_Highlighter.exe.
+1. Open the Legal_Writing_Structure_Coach folder.
+2. Double-click Legal_Writing_Structure_Coach.exe.
 3. A browser window should open at a local address such as http://localhost:5050.
 4. Paste text or upload a DOCX/PDF/RTF document.
 5. Hover over highlighted sentences for the structured explanation.
@@ -298,11 +298,11 @@ What this tool does not check
 - Whether a structure score should be treated as a formal assessment.
 
 Demo files
-- IRAC_CREAC_Highlighter_Handoff.docx explains the project, current training-tool behavior, validation, and suggested uses.
-- IRAC_CREAC_Demo_Test_Document.docx tests DOCX upload with clean, missing, blended, citation-heavy, ambiguous, and coaching-priority examples.
-- IRAC_CREAC_Demo_Test_Document.pdf tests text-based PDF upload.
-- IRAC_CREAC_Paste_Demo.txt contains examples for paste testing.
-- IRAC_CREAC_1L_Structural_Spectrum_Test.docx stresses clean, missing, muddled, and citation-heavy examples.
+- Legal_Writing_Structure_Coach_Handoff.docx explains the project, current training-tool behavior, validation, and suggested uses.
+- Legal_Writing_Structure_Coach_Demo_Test_Document.docx tests DOCX upload with clean, missing, blended, citation-heavy, ambiguous, and coaching-priority examples.
+- Legal_Writing_Structure_Coach_Demo_Test_Document.pdf tests text-based PDF upload.
+- Legal_Writing_Structure_Coach_Paste_Demo.txt contains examples for paste testing.
+- Legal_Writing_Structure_Coach_1L_Structural_Spectrum_Test.docx stresses clean, missing, muddled, and citation-heavy examples.
 - CHANGELOG.md summarizes the May 2026 training-tool refinement.
 
 Privacy note
@@ -317,6 +317,12 @@ def build_changelog() -> Path:
     path = ROOT / "CHANGELOG.md"
     path.write_text(
         """# Changelog
+
+## 2026-05-23 - Project Rename
+
+- Renamed the project from IRAC/CREAC Structural Highlighter to Legal Writing Structure Coach to match the training-tool direction.
+- Updated the browser title/header, README, handoff materials, demo documents, local build README, generated artifact names, PyInstaller spec, and GitHub repository name.
+- Kept IRAC, RAC, CRAC, and CREAC terminology in the product because those remain the structures being coached.
 
 ## 2026-05-22 - 1L Training Tool Refinement
 
@@ -349,7 +355,7 @@ Validation:
 
 
 def build_demo_pdf() -> Path:
-    path = OUT / "IRAC_CREAC_Demo_Test_Document.pdf"
+    path = OUT / "Legal_Writing_Structure_Coach_Demo_Test_Document.pdf"
     try:
         from reportlab.lib.pagesizes import letter
         from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -359,7 +365,7 @@ def build_demo_pdf() -> Path:
         styles = getSampleStyleSheet()
         styles.add(ParagraphStyle(name="SmallNote", parent=styles["BodyText"], fontSize=8.5, leading=11, textColor="#374151"))
         story = [
-            Paragraph("IRAC/CREAC Demo Test Document", styles["Title"]),
+            Paragraph("Legal Writing Structure Coach Demo Test Document", styles["Title"]),
             Paragraph("Use this text-based PDF to test PDF upload.", styles["SmallNote"]),
             Spacer(1, 0.2 * inch),
         ]
@@ -375,7 +381,7 @@ def build_demo_pdf() -> Path:
         if not chrome.exists():
             print("Skipping demo PDF: reportlab is not installed and Chrome fallback was not found.")
             return path
-        html_path = OUT / "IRAC_CREAC_Demo_Test_Document.html"
+        html_path = OUT / "Legal_Writing_Structure_Coach_Demo_Test_Document.html"
         sections = []
         for heading, framework, text, expected in DEMO_SECTIONS:
             sections.append(
@@ -388,7 +394,7 @@ def build_demo_pdf() -> Path:
             "<style>body{font-family:Arial,sans-serif;margin:42px;line-height:1.45;color:#111827}"
             "h1{font-size:24px;margin:0 0 6px}h2{font-size:15px;margin:18px 0 4px;color:#1e40af}"
             "p{font-size:11px;margin:4px 0}.note{font-size:10px;color:#374151}</style></head><body>"
-            "<h1>IRAC/CREAC Demo Test Document</h1>"
+            "<h1>Legal Writing Structure Coach Demo Test Document</h1>"
             "<p class='note'>Use this text-based PDF to test PDF upload.</p>"
             + "".join(sections)
             + "</body></html>",

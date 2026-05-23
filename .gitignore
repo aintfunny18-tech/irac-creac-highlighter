@@ -22,7 +22,7 @@ handoff/rendered_*/
 handoff/*_new/
 handoff/training-*.png
 handoff/training_*.docx
-handoff/IRAC_CREAC_Demo_Test_Document.html
+handoff/*_Demo_Test_Document.html
 
 # Local editor/assistant state
 .claude/

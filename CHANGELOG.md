@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-05-23 - Project Rename
+
+- Renamed the project from IRAC/CREAC Structural Highlighter to Legal Writing Structure Coach to match the training-tool direction.
+- Updated the browser title/header, README, handoff materials, demo documents, local build README, generated artifact names, PyInstaller spec, and GitHub repository name.
+- Kept IRAC, RAC, CRAC, and CREAC terminology in the product because those remain the structures being coached.
+
 ## 2026-05-22 - 1L Training Tool Refinement
 
 - Added a training-oriented coaching layer while keeping the app fully offline and deterministic.

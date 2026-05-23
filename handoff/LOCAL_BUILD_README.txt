@@ -1,8 +1,8 @@
-IRAC/CREAC Structural Highlighter - Local Build
+Legal Writing Structure Coach - Local Build
 
 How to run
-1. Open the IRAC_CREAC_Highlighter folder.
-2. Double-click IRAC_CREAC_Highlighter.exe.
+1. Open the Legal_Writing_Structure_Coach folder.
+2. Double-click Legal_Writing_Structure_Coach.exe.
 3. A browser window should open at a local address such as http://localhost:5050.
 4. Paste text or upload a DOCX/PDF/RTF document.
 5. Hover over highlighted sentences for the structured explanation.
@@ -21,11 +21,11 @@ What this tool does not check
 - Whether a structure score should be treated as a formal assessment.
 
 Demo files
-- IRAC_CREAC_Highlighter_Handoff.docx explains the project, current training-tool behavior, validation, and suggested uses.
-- IRAC_CREAC_Demo_Test_Document.docx tests DOCX upload with clean, missing, blended, citation-heavy, ambiguous, and coaching-priority examples.
-- IRAC_CREAC_Demo_Test_Document.pdf tests text-based PDF upload.
-- IRAC_CREAC_Paste_Demo.txt contains examples for paste testing.
-- IRAC_CREAC_1L_Structural_Spectrum_Test.docx stresses clean, missing, muddled, and citation-heavy examples.
+- Legal_Writing_Structure_Coach_Handoff.docx explains the project, current training-tool behavior, validation, and suggested uses.
+- Legal_Writing_Structure_Coach_Demo_Test_Document.docx tests DOCX upload with clean, missing, blended, citation-heavy, ambiguous, and coaching-priority examples.
+- Legal_Writing_Structure_Coach_Demo_Test_Document.pdf tests text-based PDF upload.
+- Legal_Writing_Structure_Coach_Paste_Demo.txt contains examples for paste testing.
+- Legal_Writing_Structure_Coach_1L_Structural_Spectrum_Test.docx stresses clean, missing, muddled, and citation-heavy examples.
 - CHANGELOG.md summarizes the May 2026 training-tool refinement.
 
 Privacy note

@@ -25,7 +25,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='IRAC_CREAC_Highlighter',
+    name='Legal_Writing_Structure_Coach',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -44,5 +44,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='IRAC_CREAC_Highlighter',
+    name='Legal_Writing_Structure_Coach',
 )

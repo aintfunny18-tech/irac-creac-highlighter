@@ -9,7 +9,7 @@ sys.path.insert(0, str(ROOT))
 
 from test_structural_spectrum import CASES
 
-OUT = ROOT / "handoff" / "IRAC_CREAC_1L_Structural_Spectrum_Test.docx"
+OUT = ROOT / "handoff" / "Legal_Writing_Structure_Coach_1L_Structural_Spectrum_Test.docx"
 
 
 def main() -> None:
@@ -19,7 +19,7 @@ def main() -> None:
     styles["Normal"].font.name = "Aptos"
     styles["Normal"].font.size = Pt(10.5)
 
-    doc.add_heading("IRAC/CREAC 1L Structural Spectrum Test", level=0)
+    doc.add_heading("Legal Writing Structure Coach 1L Structural Spectrum Test", level=0)
     doc.add_paragraph(
         "This document is designed to exercise automatic format detection across clean IRAC, RAC, CRAC, CREAC, missing components, blended sentences, and citation-heavy application."
     )

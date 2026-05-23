@@ -1,5 +1,5 @@
 /* ============================================================
-   IRAC/CREAC Structural Highlighter — Frontend Logic
+   Legal Writing Structure Coach — Frontend Logic
    ============================================================ */
 
 'use strict';

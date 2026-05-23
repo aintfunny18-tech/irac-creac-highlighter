@@ -1,7 +1,7 @@
 """
 QA test script for the IRAC/CREAC classifier.
 
-Reads IRAC_CREAC_Test_Document_v1.0.docx, groups each test case's content
+Reads Legal_Writing_Structure_Coach_Test_Document_v1.0.docx, groups each test case's content
 sentences into a single paragraph, runs classify_text(), and compares the
 badge against the expected result.
 
@@ -145,5 +145,5 @@ def run_tests(docx_path: str) -> None:
 
 
 if __name__ == "__main__":
-    docx = os.path.join(os.path.dirname(__file__), "IRAC_CREAC_Test_Document_v1.0.docx")
+    docx = os.path.join(os.path.dirname(__file__), "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
     run_tests(docx)

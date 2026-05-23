@@ -1,4 +1,4 @@
-# IRAC/CREAC Structural Highlighter
+# Legal Writing Structure Coach
 ## Project Specification — v1.0
 **Date:** April 11, 2026
 **Status:** Ready for Claude Code handoff
@@ -8,7 +8,7 @@
 
 ## 1. Project Overview
 
-The IRAC/CREAC Structural Highlighter is a fully offline Python desktop application that helps law students identify and correct structural deficiencies in legal writing drafts (practice exams, memos). The app ingests a draft document, classifies each sentence according to either the IRAC or CREAC framework using local heuristic analysis, and produces a color-coded, annotated view with structural problem flags and fix suggestions. An annotated `.docx` export is available for download.
+The Legal Writing Structure Coach is a fully offline Python desktop application that helps law students identify and correct structural deficiencies in legal writing drafts (practice exams, memos). The app ingests a draft document, classifies each sentence according to either the IRAC or CREAC framework using local heuristic analysis, and produces a color-coded, annotated view with structural problem flags and fix suggestions. An annotated `.docx` export is available for download.
 
 ---
 
@@ -204,7 +204,7 @@ The UI is a single-page application. Recommended layout:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  IRAC/CREAC Structural Highlighter                   │
+│  Legal Writing Structure Coach                   │
 │  [Framework: IRAC ▼]  [Analyze]  [Clear]  [Export ▼]│
 ├─────────────────────────────────────────────────────┤
 │  INPUT PANEL                                         │

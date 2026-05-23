@@ -40,7 +40,7 @@ def load_cases(path):
     return cases
 
 
-docx_path = os.path.join(os.path.dirname(__file__), "IRAC_CREAC_Test_Document_v1.0.docx")
+docx_path = os.path.join(os.path.dirname(__file__), "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
 cases = load_cases(docx_path)
 
 for case_id in sorted(cases.keys()):

@@ -1,5 +1,5 @@
 """
-Entry point for the IRAC/CREAC Structural Highlighter.
+Entry point for the Legal Writing Structure Coach.
 
 Scans ports 5050-5060 for an available port, starts the Flask server,
 and opens the user's default browser automatically.
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     port = find_free_port()
     url = f'http://localhost:{port}'
 
-    print(f"Starting IRAC/CREAC Structural Highlighter on {url}")
+    print(f"Starting Legal Writing Structure Coach on {url}")
     print("Press Ctrl+C to stop.\n")
 
     # Open browser after a short delay so Flask has time to start

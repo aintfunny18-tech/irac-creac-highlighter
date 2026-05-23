@@ -1,4 +1,4 @@
-# Edge case diagnostic — IRAC_CREAC_EdgeCase_Test_v1.0.docx
+# Edge case diagnostic — Legal_Writing_Structure_Coach_EdgeCase_Test_v1.0.docx
 import sys, io, re, os
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 sys.path.insert(0, os.path.dirname(__file__))
@@ -50,7 +50,7 @@ EXPECTED = {
               "ISSUE, RULE, APPLICATION, CONCLUSION — final sentence has 'whether' but 'therefore' + position wins"),
 }
 
-doc = Document(os.path.join(os.path.dirname(__file__), 'IRAC_CREAC_EdgeCase_Test_v1.0.docx'))
+doc = Document(os.path.join(os.path.dirname(__file__), 'Legal_Writing_Structure_Coach_EdgeCase_Test_v1.0.docx'))
 all_paras = [p.text.strip() for p in doc.paragraphs]
 
 passes = 0

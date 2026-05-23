@@ -1,0 +1,35 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local logs and smoke-test output
+*.log
+server.training.*.log
+
+# Build/package outputs
+build/
+dist/
+*.spec~
+
+# Rendered QA previews and transient generated browser/PDF helpers
+handoff/rendered_*/
+handoff/*_new/
+handoff/training-*.png
+handoff/training_*.docx
+handoff/IRAC_CREAC_Demo_Test_Document.html
+
+# Local editor/assistant state
+.claude/
+.DS_Store
+Thumbs.db
+
+# Local course/source materials used during exploratory diagnostics, not app source
+1886-SP26_MIDTERM_CRIMINAL_LAW_Sect319A_Starger_202603061610.rtf
+CivPro_II_Exam1_Piedmont_Healthcare.docx
+model_answer_test_bank_v2.docx

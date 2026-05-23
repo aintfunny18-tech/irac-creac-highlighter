@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IRAC/CREAC Structural Highlighter</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<header>
+  <h1>IRAC/CREAC Structural Highlighter</h1>
+  <div class="header-controls">
+    <!-- intentionally empty; controls are in input-footer -->
+  </div>
+</header>
+
+<div class="app-layout">
+
+  <!-- ============================================================
+       INPUT PANEL
+       ============================================================ -->
+  <aside class="input-panel">
+
+    <!-- Tab bar -->
+    <div class="tab-bar" role="tablist">
+      <button class="tab-btn active" role="tab" data-tab="paste">Paste Text</button>
+      <button class="tab-btn" role="tab" data-tab="docx">Upload .docx</button>
+      <button class="tab-btn" role="tab" data-tab="pdf">Upload .pdf</button>
+    </div>
+
+    <!-- Tab: Paste -->
+    <div class="tab-content active" id="tab-paste">
+      <textarea
+        id="paste-input"
+        placeholder="Paste your legal writing draft here…"
+        aria-label="Paste text input"
+      ></textarea>
+    </div>
+
+    <!-- Tab: DOCX -->
+    <div class="tab-content" id="tab-docx">
+      <label class="file-drop-zone" id="docx-drop" for="docx-file-input">
+        <span class="file-icon">📄</span>
+        <span>Click or drag a <strong>.docx</strong> file here</span>
+        <span style="font-size:11px;color:#9CA3AF">Word documents only</span>
+        <input type="file" id="docx-file-input" accept=".docx" />
+      </label>
+      <div class="file-selected-name" id="docx-filename"></div>
+    </div>
+
+    <!-- Tab: PDF -->
+    <div class="tab-content" id="tab-pdf">
+      <label class="file-drop-zone" id="pdf-drop" for="pdf-file-input">
+        <span class="file-icon">📋</span>
+        <span>Click or drag a <strong>.pdf</strong> file here</span>
+        <span style="font-size:11px;color:#9CA3AF">Text-based PDFs only (not scanned)</span>
+        <input type="file" id="pdf-file-input" accept=".pdf" />
+      </label>
+      <div class="file-selected-name" id="pdf-filename"></div>
+    </div>
+
+    <!-- Inline messages -->
+    <div class="message-area">
+      <div class="msg msg-error"   id="msg-error"></div>
+      <div class="msg msg-warning" id="msg-warning"></div>
+    </div>
+
+    <!-- Footer controls -->
+    <div class="input-footer">
+      <span class="mode-pill">Auto-detects IRAC / RAC / CRAC / CREAC</span>
+      <div class="spacer"></div>
+      <button class="btn btn-secondary" id="btn-clear">Clear</button>
+      <button class="btn btn-primary"   id="btn-analyze">Analyze</button>
+      <button class="btn btn-export"    id="btn-export" disabled>Export ▼</button>
+    </div>
+
+  </aside>
+
+  <!-- ============================================================
+       RESULTS PANEL
+       ============================================================ -->
+  <main class="results-panel">
+
+    <!-- Legend -->
+    <div class="results-header" id="results-header">
+      <span class="legend-title">Legend</span>
+
+      <label class="legend-item">
+        <input type="checkbox" data-label="ISSUE" checked />
+        <span class="legend-chip" style="background:rgba(236,72,153,.25)">ISSUE</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="RULE" checked />
+        <span class="legend-chip" style="background:rgba(34,197,94,.25)">RULE</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="EXPLANATION" checked />
+        <span class="legend-chip" style="background:rgba(168,85,247,.25)">EXPLANATION</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="APPLICATION" checked />
+        <span class="legend-chip" style="background:rgba(249,115,22,.25)">APPLICATION</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="CONCLUSION" checked />
+        <span class="legend-chip" style="background:rgba(59,130,246,.25)">CONCLUSION</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="UNCLASSIFIED" checked />
+        <span class="legend-chip" style="background:rgba(243,244,246,.9);border:1px solid #E5E7EB">UNCLASSIFIED</span>
+      </label>
+      <label class="legend-item">
+        <span class="legend-chip" style="text-decoration:underline dashed #EF4444 2px">~~BLEND~~</span>
+        <span style="font-size:11px;color:#6B7280">= dashed underline</span>
+      </label>
+      <span class="legend-divider"></span>
+      <label class="legend-item focus-toggle">
+        <input type="checkbox" id="toggle-focus" />
+        <span>Warnings / low confidence only</span>
+      </label>
+      <span class="confidence-key">
+        <span class="conf-mark conf-key-low"></span> low
+        <span class="conf-mark conf-key-medium"></span> medium
+        <span class="conf-mark conf-key-high"></span> high
+      </span>
+    </div>
+
+    <!-- Results scroll area -->
+    <div class="results-scroll" id="results-container">
+      <div class="empty-state" id="empty-state">
+        <span class="empty-icon">⚖️</span>
+        <span>Paste or upload a legal draft, then click <strong>Analyze</strong>.</span>
+      </div>
+    </div>
+
+    <!-- Summary bar -->
+    <div class="summary-bar" id="summary-bar" style="display:none">
+      <span>Paragraphs: <span class="stat-val" id="stat-paras">—</span></span>
+      <span>Complete: <span class="stat-val" id="stat-complete">—</span></span>
+      <span>Warnings: <span class="stat-val" id="stat-warnings">—</span></span>
+      <span>Sentences: <span class="stat-val" id="stat-sents">—</span></span>
+      <span>Blends: <span class="stat-val" id="stat-blends">—</span></span>
+      <span style="margin-left:auto;opacity:.6" id="stat-label-counts"></span>
+    </div>
+
+  </main>
+</div>
+
+<!-- Tooltip (global, absolutely positioned) -->
+<div id="tooltip" role="tooltip"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

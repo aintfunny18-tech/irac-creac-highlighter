@@ -139,6 +139,7 @@ textarea#paste-input:focus { border-color: #6366F1; }
   text-align: center;
 }
 .file-drop-zone:hover { border-color: #6366F1; background: #F0F4FF; color: #4F46E5; }
+.file-drop-zone.drag-active { border-color: #3B82F6; background: #F0F9FF; color: #1D4ED8; }
 .file-drop-zone input[type="file"] { display: none; }
 .file-drop-zone .file-icon { font-size: 28px; }
 .file-selected-name {

@@ -228,8 +228,9 @@ def build_handoff() -> Path:
         "Perturbation tests: python test_perturbations.py.",
         "Training-layer regression tests: python test_training_tool.py.",
         "Pytest regression suite: python -m pytest.",
+        "Pytest collection check: python -m pytest --co -q.",
         "JS syntax check: bundled Node runtime with node --check app/static/app.js.",
-        "Live smoke path: paste-demo analysis renders highlights, click/tap sentence details, RTF upload tab, and export-ready results.",
+        "Live smoke path: paste-demo analysis renders highlights, click/tap sentence details, RTF upload tab, drag-and-drop upload zones, and export-ready results.",
     ])
 
     add_heading(doc, "Sharing Options", 1)
@@ -318,6 +319,23 @@ def build_changelog() -> Path:
     path = ROOT / "CHANGELOG.md"
     path.write_text(
         """# Changelog
+
+## 2026-05-24 - Claude Review Cleanup
+
+- Moved classifier phrase dictionaries, regex patterns, label colors, suggestions, and party-name stopwords into `app/constants.py`.
+- Reused the shared structural-label regex in the parser instead of recompiling an equivalent parser-only regex.
+- Added real drag-and-drop handlers and visual feedback for DOCX, PDF, and RTF upload zones.
+- Converted the legacy classifier, perturbation, structural-spectrum, and training-tool scripts to native pytest tests while preserving direct `python test_*.py` execution through pytest.
+- Removed the temporary pytest wrapper file and added unsupported-upload and malformed-paste regression tests.
+
+Validation:
+- `python -m pytest -v`
+- `python -m pytest --co -q`
+- `python test_classifier.py`
+- `python test_training_tool.py`
+- `python test_structural_spectrum.py`
+- `python test_perturbations.py`
+- Bundled Node syntax check for `app/static/app.js`
 
 ## 2026-05-23 - Claude Feedback Implementation
 

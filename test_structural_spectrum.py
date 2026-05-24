@@ -5,9 +5,10 @@ Run with:
   python.exe test_structural_spectrum.py
 """
 
-import io
 import os
 import sys
+
+import pytest
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -102,36 +103,20 @@ CASES = [
 ]
 
 
-def run_tests() -> None:
-    passes = 0
-    failures = 0
-    for case in CASES:
-        para = classify_text([case["text"]], "AUTO")["paragraphs"][0]
-        ok = para["badge"] == case["badge"]
-        if case.get("effective"):
-            ok = ok and para["effective_framework"] == case["effective"]
-        if case.get("labels"):
-            ok = ok and [s["label"] for s in para["sentences"]] == case["labels"]
-        for needle, expected_label in case.get("must_label", {}).items():
-            match = next((s for s in para["sentences"] if needle in s["text"]), None)
-            ok = ok and match is not None and match["label"] == expected_label
 
-        print(f"[{'PASS' if ok else 'FAIL'}] {case['name']}")
-        print(f"       expected: {case['badge']}  actual: {para['badge']}  detected={para['effective_framework']}")
-        if not ok:
-            for i, sent in enumerate(para["sentences"]):
-                print(f"       {i:2d}. [{sent['label']:12s}] {sent['trigger_phrase']} :: {sent['text'][:100]}")
-            failures += 1
-        else:
-            passes += 1
-        print()
-
-    print("=" * 70)
-    print(f"Structural spectrum tests: {passes} PASS, {failures} FAIL ({passes}/{passes + failures})")
-    if failures:
-        raise SystemExit(1)
+@pytest.mark.parametrize("case", CASES, ids=[case["name"] for case in CASES])
+def test_structural_spectrum_case(case: dict) -> None:
+    para = classify_text([case["text"]], "AUTO")["paragraphs"][0]
+    assert para["badge"] == case["badge"], case["name"]
+    if case.get("effective"):
+        assert para["effective_framework"] == case["effective"], case["name"]
+    if case.get("labels"):
+        assert [s["label"] for s in para["sentences"]] == case["labels"], case["name"]
+    for needle, expected_label in case.get("must_label", {}).items():
+        match = next((s for s in para["sentences"] if needle in s["text"]), None)
+        assert match is not None, f"{case['name']} missing {needle}"
+        assert match["label"] == expected_label, f"{case['name']} {needle}"
 
 
 if __name__ == "__main__":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    run_tests()
+    raise SystemExit(pytest.main([__file__]))

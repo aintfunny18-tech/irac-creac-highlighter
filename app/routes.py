@@ -72,7 +72,10 @@ def analyze():
         # JSON paste path
         data = request.get_json(silent=True) or {}
         framework = data.get("framework", "AUTO").upper()
-        text = data.get("text", "").strip()
+        raw_text = data.get("text", "")
+        if not isinstance(raw_text, str):
+            return _bad("No text was provided. Please paste text or upload a file.")
+        text = raw_text.strip()
 
         if not text:
             return _bad("No text was provided. Please paste text or upload a file.")

@@ -58,6 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
   rtfFileInput.addEventListener('change', () => {
     rtfFilename.textContent = rtfFileInput.files[0]?.name || '';
   });
+  registerFileDropZone('docx-drop', docxFileInput);
+  registerFileDropZone('pdf-drop', pdfFileInput);
+  registerFileDropZone('rtf-drop', rtfFileInput);
 
   // Buttons
   btnAnalyze.addEventListener('click', runAnalysis);
@@ -93,6 +96,34 @@ function switchTab(tab) {
   if (tab !== 'pdf')  { pdfFileInput.value = '';  pdfFilename.textContent = '';  }
   if (tab !== 'rtf')  { rtfFileInput.value = '';  rtfFilename.textContent = '';  }
   clearMessages();
+}
+
+function registerFileDropZone(dropId, fileInput) {
+  const zone = document.getElementById(dropId);
+  if (!zone || !fileInput) return;
+
+  ['dragenter', 'dragover'].forEach(eventName => {
+    zone.addEventListener(eventName, e => {
+      e.preventDefault();
+      e.stopPropagation();
+      zone.classList.add('drag-active');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    zone.addEventListener(eventName, e => {
+      e.preventDefault();
+      e.stopPropagation();
+      zone.classList.remove('drag-active');
+    });
+  });
+
+  zone.addEventListener('drop', e => {
+    const files = e.dataTransfer?.files;
+    if (!files || !files.length) return;
+    fileInput.files = files;
+    fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+  });
 }
 
 function onGlobalKeydown(e) {

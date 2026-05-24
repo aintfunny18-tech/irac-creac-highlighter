@@ -9,10 +9,11 @@ Run with:
   python.exe test_classifier.py
 """
 
-import io
-import re
 import os
+import re
 import sys
+
+import pytest
 
 # Make sure app package is importable
 sys.path.insert(0, os.path.dirname(__file__))
@@ -97,54 +98,26 @@ def load_test_cases(docx_path: str) -> dict[str, tuple[str, list[str]]]:
 
 
 # ---------------------------------------------------------------------------
-# Run tests
+# Pytest cases
 # ---------------------------------------------------------------------------
 
-def run_tests(docx_path: str) -> None:
-    cases = load_test_cases(docx_path)
 
-    passes = 0
-    failures = 0
+@pytest.fixture(scope="module")
+def demo_cases() -> dict[str, tuple[str, list[str]]]:
+    docx = os.path.join(os.path.dirname(__file__), "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
+    return load_test_cases(docx)
 
-    for case_id in sorted(cases.keys()):
-        framework, paras = cases[case_id]
-        expected_fw, expected_badge = EXPECTED.get(case_id, (framework, "???"))
 
-        # Join all content paragraphs into one text block so NLTK can
-        # tokenize across sentence boundaries and the badge is computed
-        # on the complete structural unit.
-        full_text = " ".join(paras)
-        result = classify_text([full_text], framework)
-        para_result = result["paragraphs"][0]
-        actual_badge = para_result["badge"]
+@pytest.mark.parametrize("case_id", sorted(EXPECTED.keys()))
+def test_demo_document_badges(case_id: str, demo_cases: dict[str, tuple[str, list[str]]]) -> None:
+    framework, paras = demo_cases[case_id]
+    expected_framework, expected_badge = EXPECTED[case_id]
+    assert framework == expected_framework
 
-        status = "PASS" if actual_badge == expected_badge else "FAIL"
-        if status == "PASS":
-            passes += 1
-        else:
-            failures += 1
-
-        print(f"[{status}] {case_id} ({framework})")
-        print(f"       expected: {expected_badge}")
-        print(f"       actual:   {actual_badge}  ({para_result['badge_label']})")
-
-        if status == "FAIL":
-            print("       --- sentence breakdown ---")
-            for i, sent in enumerate(para_result["sentences"]):
-                blend_mark = " [BLEND]" if sent["blend"] else ""
-                trigger = f"  ← {sent['trigger_phrase']}" if sent["trigger_phrase"] else ""
-                print(f"       {i:2d}. [{sent['label']:14s}]{blend_mark}{trigger}")
-                print(f"           {sent['text'][:90]}")
-        print()
-
-    print(f"{'='*50}")
-    print(f"Results: {passes} PASS, {failures} FAIL  ({passes}/{passes+failures})")
-    if failures:
-        raise SystemExit(1)
+    full_text = " ".join(paras)
+    para_result = classify_text([full_text], framework)["paragraphs"][0]
+    assert para_result["badge"] == expected_badge
 
 
 if __name__ == "__main__":
-    # Force UTF-8 output on Windows console for direct script runs.
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    docx = os.path.join(os.path.dirname(__file__), "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
-    run_tests(docx)
+    raise SystemExit(pytest.main([__file__]))

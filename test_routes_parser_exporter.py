@@ -50,6 +50,13 @@ def test_analyze_rejects_oversized_paste():
     assert response.get_json()["error"] == "Pasted text is too long. Please keep pasted text under 50KB."
 
 
+def test_analyze_rejects_non_string_paste():
+    client = app.test_client()
+    response = client.post("/analyze", json={"text": {"bad": "shape"}, "framework": "AUTO"})
+    assert response.status_code == 400
+    assert response.get_json()["error"] == "No text was provided. Please paste text or upload a file."
+
+
 def test_analyze_rejects_oversized_upload():
     client = app.test_client()
     response = client.post(
@@ -62,6 +69,20 @@ def test_analyze_rejects_oversized_upload():
     )
     assert response.status_code == 400
     assert response.get_json()["error"] == "Uploaded file is too large. Please keep uploads under 10MB."
+
+
+def test_analyze_rejects_unsupported_upload_type():
+    client = app.test_client()
+    response = client.post(
+        "/analyze",
+        data={
+            "framework": "AUTO",
+            "file": (io.BytesIO(b"not a legal draft"), "draft.txt"),
+        },
+        content_type="multipart/form-data",
+    )
+    assert response.status_code == 400
+    assert response.get_json()["error"] == "Unsupported file type. Please upload a .docx, .pdf, or .rtf file."
 
 
 def test_rtf_upload_route_works():

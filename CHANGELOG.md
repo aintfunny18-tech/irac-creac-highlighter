@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-05-24 - Claude Review Cleanup
+
+- Moved classifier phrase dictionaries, regex patterns, label colors, suggestions, and party-name stopwords into `app/constants.py`.
+- Reused the shared structural-label regex in the parser instead of recompiling an equivalent parser-only regex.
+- Added real drag-and-drop handlers and visual feedback for DOCX, PDF, and RTF upload zones.
+- Converted the legacy classifier, perturbation, structural-spectrum, and training-tool scripts to native pytest tests while preserving direct `python test_*.py` execution through pytest.
+- Removed the temporary pytest wrapper file and added unsupported-upload and malformed-paste regression tests.
+
+Validation:
+- `python -m pytest -v`
+- `python -m pytest --co -q`
+- `python test_classifier.py`
+- `python test_training_tool.py`
+- `python test_structural_spectrum.py`
+- `python test_perturbations.py`
+- Bundled Node syntax check for `app/static/app.js`
+
 ## 2026-05-23 - Claude Feedback Implementation
 
 - Added 50KB pasted-text and 10MB upload limits with student-friendly errors.

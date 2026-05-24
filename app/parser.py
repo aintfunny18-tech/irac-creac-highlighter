@@ -6,6 +6,8 @@ All three paths return (paragraphs: list[str], warnings: list[str]).
 import re
 from io import BytesIO
 
+from app.constants import STRUCT_LABEL_PATTERN
+
 # ---------------------------------------------------------------------------
 # Test-document grouping helpers
 # ---------------------------------------------------------------------------
@@ -15,10 +17,7 @@ _TEST_CASE_RE = re.compile(r'^TEST CASE [A-Z]-\d+\s*\|', re.I)
 
 # Matches paragraphs that open with a structural IRAC/CRAC/RAC label:
 # "Issue:", "Rule:", "Analysis:", "Application — X:", "Conclusion:"
-_STRUCT_PARA_RE = re.compile(
-    r'^(?:issue|rule|analysis|application(?:\s*[—\-][^:]{0,60})?|conclusion)\s*:',
-    re.I,
-)
+_STRUCT_PARA_RE = re.compile(STRUCT_LABEL_PATTERN, re.I)
 
 
 def _group_struct_labeled(paragraphs: list[str]) -> list[str]:

@@ -8,12 +8,23 @@ from flask import jsonify, render_template, request, send_file
 
 from app import app
 from app import classifier, exporter, parser
-
-ALLOWED_EXTENSIONS = {".docx", ".pdf", ".rtf"}
+from app.constants import ALLOWED_EXTENSIONS, MAX_PASTE_BYTES, MAX_UPLOAD_BYTES
 
 
 def _bad(message: str, status: int = 400):
     return jsonify({"error": message}), status
+
+
+def _file_size(file_storage) -> int | None:
+    """Return upload size without consuming the stream when possible."""
+    stream = getattr(file_storage, "stream", None)
+    if stream is None or not all(hasattr(stream, name) for name in ("tell", "seek")):
+        return file_storage.content_length or None
+    pos = stream.tell()
+    stream.seek(0, os.SEEK_END)
+    size = stream.tell()
+    stream.seek(pos)
+    return size
 
 
 @app.route("/")
@@ -28,6 +39,9 @@ def analyze():
     warnings: list[str] = []
 
     if request.content_type and request.content_type.startswith("multipart/form-data"):
+        if request.content_length and request.content_length > MAX_UPLOAD_BYTES + 65536:
+            return _bad("Uploaded file is too large. Please keep uploads under 10MB.")
+
         # File upload path
         framework = request.form.get("framework", "AUTO").upper()
         file = request.files.get("file")
@@ -37,7 +51,11 @@ def analyze():
 
         ext = os.path.splitext(file.filename)[1].lower()
         if ext not in ALLOWED_EXTENSIONS:
-            return _bad("Unsupported file type. Please upload a .docx or .pdf file.")
+            return _bad("Unsupported file type. Please upload a .docx, .pdf, or .rtf file.")
+
+        size = _file_size(file)
+        if size is not None and size > MAX_UPLOAD_BYTES:
+            return _bad("Uploaded file is too large. Please keep uploads under 10MB.")
 
         if ext == ".docx":
             paragraphs, warnings = parser.parse_docx(file)
@@ -58,6 +76,8 @@ def analyze():
 
         if not text:
             return _bad("No text was provided. Please paste text or upload a file.")
+        if len(text.encode("utf-8")) > MAX_PASTE_BYTES:
+            return _bad("Pasted text is too long. Please keep pasted text under 50KB.")
 
         paragraphs, warnings = parser.parse_plaintext(text)
 
@@ -94,8 +114,9 @@ def export():
 
     try:
         buf = exporter.export_docx(data)
-    except Exception as exc:
-        return _bad(f"Export failed: {exc}", 500)
+    except Exception:
+        app.logger.exception("DOCX export failed")
+        return _bad("Export failed. Please try again or re-run the analysis before exporting.", 500)
 
     return send_file(
         buf,

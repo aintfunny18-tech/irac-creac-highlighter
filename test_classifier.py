@@ -9,13 +9,10 @@ Run with:
   python.exe test_classifier.py
 """
 
-import sys
 import io
 import re
 import os
-
-# Force UTF-8 output on Windows console
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+import sys
 
 # Make sure app package is importable
 sys.path.insert(0, os.path.dirname(__file__))
@@ -142,8 +139,12 @@ def run_tests(docx_path: str) -> None:
 
     print(f"{'='*50}")
     print(f"Results: {passes} PASS, {failures} FAIL  ({passes}/{passes+failures})")
+    if failures:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
+    # Force UTF-8 output on Windows console for direct script runs.
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
     docx = os.path.join(os.path.dirname(__file__), "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
     run_tests(docx)

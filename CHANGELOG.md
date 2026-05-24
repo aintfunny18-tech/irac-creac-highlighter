@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-05-23 - Claude Feedback Implementation
+
+- Added 50KB pasted-text and 10MB upload limits with student-friendly errors.
+- Added the RTF upload tab, Ctrl/Cmd+Enter analyze shortcut, click/tap sentence detail panels, and a more responsive layout.
+- Moved shared parser/classifier constants into `app/constants.py` and moved citation-starter regex compilation to module scope.
+- Added counterargument/opposing-position coaching metadata and revision priorities without adding a new top-level IRAC label.
+- Hardened export errors so internal exception details are logged but not shown to students.
+- Added pytest coverage for legacy regressions, parser/routes/export behavior, counterarguments, RTF uploads, and size limits.
+
+Validation:
+- `python test_classifier.py`
+- `python test_training_tool.py`
+- `python test_structural_spectrum.py`
+- `python test_perturbations.py`
+- `python -m pytest`
+- Bundled Node syntax check for `app/static/app.js`
+- Browser smoke test for paste-demo analysis, RTF tab, and click/tap sentence details
+
 ## 2026-05-23 - Project Rename
 
 - Renamed the project from IRAC/CREAC Structural Highlighter to Legal Writing Structure Coach to match the training-tool direction.

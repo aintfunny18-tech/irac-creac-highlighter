@@ -18,6 +18,8 @@ import re
 
 import nltk
 
+from app.constants import STRUCT_LABEL_RE
+
 # ---------------------------------------------------------------------------
 # Keyword / phrase constants
 # ---------------------------------------------------------------------------
@@ -407,17 +409,25 @@ _SPECIFIC_LEGAL_OUTCOME_RE = re.compile(
     re.I,
 )
 
-# Structural section labels used in exam/memo writing: "Rule:", "Analysis:",
-# "Application — Purposeful Availment:", "Conclusion:", "Issue:"
-# When a sentence starts with one of these, the label word is authoritative.
-_STRUCT_LABEL_RE = re.compile(
-    r'^(?P<lbl>issue|rule|analysis|application(?:\s*[—\-]\s*[^:]{0,60})?|conclusion)\s*:\s*',
-    re.I,
-)
-
 # Guard for CRAC/CREAC opening-conclusion heuristic: do NOT fire on sentences
 # that already declare their own structural label ("Analysis: ...", "Application: ...").
 _SECTION_PREFIX_RE = re.compile(r'^(?:analysis|application)\b', re.I)
+
+_CITE_STARTERS = re.compile(
+    r'^(?:see\s+also|see|id\.|cf\.|accord|compare)\b', re.I
+)
+
+_COUNTERARGUMENT_RE = re.compile(
+    r'\b(?:'
+    r'(?:plaintiff|defendant|petitioner|respondent|appellant|appellee|state|government|prosecution)\s+'
+    r'(?:will|would|may|might|could|can|should|is\s+likely\s+to)\s+'
+    r'(?:argue|contend|claim|assert|respond|counter)|'
+    r'one\s+could\s+argue|one\s+might\s+argue|opposing\s+counsel\s+(?:will|would|may)\s+argue|'
+    r'on\s+the\s+other\s+hand|by\s+contrast|conversely|however,\s+(?:plaintiff|defendant|petitioner|respondent|appellant|appellee)\s+'
+    r'(?:will|would|may|might|could)\s+(?:argue|contend|claim|assert)'
+    r')\b',
+    re.I,
+)
 
 # Strong sentence-start conclusion markers — checked BEFORE RULE to prevent
 # "Therefore, a court would likely find..." from being misclassified as RULE.
@@ -699,6 +709,11 @@ def _has_citation(sentence: str) -> bool:
     return False
 
 
+def _is_counterargument(sentence: str) -> bool:
+    """Detect opposing-position frames without creating a new IRAC label."""
+    return bool(_COUNTERARGUMENT_RE.search(sentence))
+
+
 def _auto_detect_framework(para_text: str, user_framework: str) -> str:
     """
     Pick the best paragraph-level analysis mode.
@@ -891,6 +906,12 @@ def _sentence_revision_hint(sentence_data: dict) -> str:
     sl = text.lower()
     evidence_scores = sentence_data.get("evidence_scores", {})
 
+    if sentence_data.get("counterargument"):
+        return (
+            "This reads as an opposing-position sentence. Make sure the paragraph "
+            "answers it with rule-based application, not just a bare assertion."
+        )
+
     if sentence_data.get("blend"):
         return (
             "This looks blended. Try splitting the legal rule from the fact-specific "
@@ -1024,6 +1045,8 @@ def _score_sentence_evidence(
     # Application evidence.
     app_start = _starts_with_any(sl, APPLICATION_START_PHRASES)
     app_phrase = _starts_with_any(sl, APPLICATION_PHRASES) or _contains_any(sl, APPLICATION_PHRASES)
+    if _is_counterargument(s):
+        _add_score(scores, evidence, "APPLICATION", 2.4, "opposing-position signal")
     if app_start:
         _add_score(scores, evidence, "APPLICATION", 3.3, app_start)
     elif app_phrase:
@@ -1263,7 +1286,7 @@ def _classify_sentence(
     # "Rule:", "Analysis:", "Application — Purposeful Availment:", "Conclusion:", "Issue:"
     # When present, the label word is authoritative — return the matching
     # classification immediately (or strip the prefix and continue for "Issue:").
-    m = _STRUCT_LABEL_RE.match(s)
+    m = STRUCT_LABEL_RE.match(s)
     if m:
         lbl_word = m.group('lbl').lower()
         if lbl_word.startswith('rule'):
@@ -1300,6 +1323,11 @@ def _classify_sentence(
     if re.search(r'\b(?:question|issue|inquiry|problem)\b.{0,60}\bwhether\b', sl):
         if not re.search(r'\b(?:therefore|thus|accordingly|hence)\b', sl):
             return "ISSUE", "whether"
+
+    # Opposing-position frames are application/analysis work, not standalone
+    # conclusions. Surface the coaching note later through metadata.
+    if _is_counterargument(s):
+        return "APPLICATION", "[opposing-position signal]"
 
     # ---- CRAC/CREAC: opening conclusion (first sentence of paragraph) ----
     # In CRAC, the first sentence is always a conclusion assertion.
@@ -1951,6 +1979,14 @@ def _revision_priorities(
             "info",
         )
 
+    if any(s.get("counterargument") for s in sentences_data):
+        add(
+            "counterargument_needs_response",
+            "Answer the opposing argument.",
+            "A counterargument is useful only if the paragraph responds with rule-based application to the current facts.",
+            "warning",
+        )
+
     rule_count = labels.count("RULE") + labels.count("EXPLANATION")
     if rule_count >= 3 and "APPLICATION" not in label_set:
         add(
@@ -2088,6 +2124,7 @@ def classify_text(paragraphs: list[str], framework: str) -> dict:
                 "color_hex": LABEL_COLORS[label],
                 "blend": False,
                 "blend_type": None,
+                "counterargument": _is_counterargument(sent_text),
                 "trigger_phrase": trigger,
             })
 
@@ -2101,9 +2138,6 @@ def classify_text(paragraphs: list[str], framework: str) -> dict:
         # A "standalone citation" is UNCLASSIFIED, has a citation signal, and
         # either (a) is short (≤ 15 words) or (b) starts with a citation signal
         # word like "See", "Id.", "Cf.", "Accord".
-        _CITE_STARTERS = re.compile(
-            r'^(?:see\s+also|see|id\.|cf\.|accord|compare)\b', re.I
-        )
         prev_known_label = None
         for sd in sentences_data:
             if sd["label"] != "UNCLASSIFIED":
@@ -2140,6 +2174,7 @@ def classify_text(paragraphs: list[str], framework: str) -> dict:
                 "label": s["label"],
                 "color_hex": s["color_hex"],
                 "blend": s["blend"],
+                "counterargument": s.get("counterargument", False),
                 "trigger_phrase": s["trigger_phrase"],
                 "confidence": s.get("confidence", 0.0),
                 "confidence_label": s.get("confidence_label", "low"),

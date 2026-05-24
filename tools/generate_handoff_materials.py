@@ -227,8 +227,9 @@ def build_handoff() -> Path:
         "Structural spectrum tests: python test_structural_spectrum.py.",
         "Perturbation tests: python test_perturbations.py.",
         "Training-layer regression tests: python test_training_tool.py.",
+        "Pytest regression suite: python -m pytest.",
         "JS syntax check: bundled Node runtime with node --check app/static/app.js.",
-        "Live smoke path: /analyze returns training fields and /export produces a valid annotated DOCX.",
+        "Live smoke path: paste-demo analysis renders highlights, click/tap sentence details, RTF upload tab, and export-ready results.",
     ])
 
     add_heading(doc, "Sharing Options", 1)
@@ -317,6 +318,24 @@ def build_changelog() -> Path:
     path = ROOT / "CHANGELOG.md"
     path.write_text(
         """# Changelog
+
+## 2026-05-23 - Claude Feedback Implementation
+
+- Added 50KB pasted-text and 10MB upload limits with student-friendly errors.
+- Added the RTF upload tab, Ctrl/Cmd+Enter analyze shortcut, click/tap sentence detail panels, and a more responsive layout.
+- Moved shared parser/classifier constants into `app/constants.py` and moved citation-starter regex compilation to module scope.
+- Added counterargument/opposing-position coaching metadata and revision priorities without adding a new top-level IRAC label.
+- Hardened export errors so internal exception details are logged but not shown to students.
+- Added pytest coverage for legacy regressions, parser/routes/export behavior, counterarguments, RTF uploads, and size limits.
+
+Validation:
+- `python test_classifier.py`
+- `python test_training_tool.py`
+- `python test_structural_spectrum.py`
+- `python test_perturbations.py`
+- `python -m pytest`
+- Bundled Node syntax check for `app/static/app.js`
+- Browser smoke test for paste-demo analysis, RTF tab, and click/tap sentence details
 
 ## 2026-05-23 - Project Rename
 

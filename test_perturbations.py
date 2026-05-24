@@ -10,7 +10,6 @@ import io
 import os
 import sys
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.path.insert(0, os.path.dirname(__file__))
 
 from app.classifier import classify_text
@@ -100,4 +99,5 @@ def run_tests() -> None:
 
 
 if __name__ == "__main__":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
     run_tests()

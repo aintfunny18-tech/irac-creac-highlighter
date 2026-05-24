@@ -8,15 +8,15 @@
 // State
 // ---------------------------------------------------------------------------
 let currentResults = null;   // last successful /analyze response
-let activeTab = 'paste';     // 'paste' | 'docx' | 'pdf'
+let activeTab = 'paste';     // 'paste' | 'docx' | 'pdf' | 'rtf'
 const hiddenLabels = new Set(); // label names toggled off in legend
 let focusOnly = false;       // show only warning / low-confidence paragraphs
 
 // ---------------------------------------------------------------------------
 // Element refs (resolved after DOMContentLoaded)
 // ---------------------------------------------------------------------------
-let tabBtns, pasteInput, docxFileInput, pdfFileInput;
-let docxFilename, pdfFilename;
+let tabBtns, pasteInput, docxFileInput, pdfFileInput, rtfFileInput;
+let docxFilename, pdfFilename, rtfFilename;
 let btnAnalyze, btnClear, btnExport;
 let msgError, msgWarning;
 let resultsContainer, emptyState, summaryBar, toggleFocus;
@@ -30,8 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
   pasteInput     = document.getElementById('paste-input');
   docxFileInput  = document.getElementById('docx-file-input');
   pdfFileInput   = document.getElementById('pdf-file-input');
+  rtfFileInput   = document.getElementById('rtf-file-input');
   docxFilename   = document.getElementById('docx-filename');
   pdfFilename    = document.getElementById('pdf-filename');
+  rtfFilename    = document.getElementById('rtf-filename');
   btnAnalyze     = document.getElementById('btn-analyze');
   btnClear       = document.getElementById('btn-clear');
   btnExport      = document.getElementById('btn-export');
@@ -53,11 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
   pdfFileInput.addEventListener('change', () => {
     pdfFilename.textContent = pdfFileInput.files[0]?.name || '';
   });
+  rtfFileInput.addEventListener('change', () => {
+    rtfFilename.textContent = rtfFileInput.files[0]?.name || '';
+  });
 
   // Buttons
   btnAnalyze.addEventListener('click', runAnalysis);
   btnClear.addEventListener('click', clearAll);
   btnExport.addEventListener('click', runExport);
+  document.addEventListener('keydown', onGlobalKeydown);
 
   // Legend toggles
   document.querySelectorAll('.results-header input[type="checkbox"]').forEach(cb => {
@@ -68,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Tooltip (event delegation)
   resultsContainer.addEventListener('mouseover', onTooltipShow);
   resultsContainer.addEventListener('mouseout', onTooltipHide);
+  resultsContainer.addEventListener('click', onSentenceClick);
   document.addEventListener('mousemove', onTooltipMove);
 });
 
@@ -84,7 +91,15 @@ function switchTab(tab) {
   if (tab !== 'paste') pasteInput.value = '';
   if (tab !== 'docx') { docxFileInput.value = ''; docxFilename.textContent = ''; }
   if (tab !== 'pdf')  { pdfFileInput.value = '';  pdfFilename.textContent = '';  }
+  if (tab !== 'rtf')  { rtfFileInput.value = '';  rtfFilename.textContent = '';  }
   clearMessages();
+}
+
+function onGlobalKeydown(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault();
+    if (!btnAnalyze.disabled) runAnalysis();
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -106,7 +121,7 @@ async function runAnalysis() {
     });
 
   } else {
-    const fileInput = activeTab === 'docx' ? docxFileInput : pdfFileInput;
+    const fileInput = getActiveFileInput();
     if (!fileInput.files.length) {
       showError('No file selected. Please choose a file to upload.');
       return;
@@ -140,6 +155,12 @@ async function runAnalysis() {
   } finally {
     setLoading(false);
   }
+}
+
+function getActiveFileInput() {
+  if (activeTab === 'docx') return docxFileInput;
+  if (activeTab === 'pdf') return pdfFileInput;
+  return rtfFileInput;
 }
 
 // ---------------------------------------------------------------------------
@@ -225,6 +246,7 @@ function buildParaBlock(para) {
     span.dataset.uncertainty = sent.uncertainty_reason || '';
     span.dataset.hint = sent.revision_hint || '';
     span.dataset.blend = sent.blend ? 'true' : 'false';
+    span.dataset.counterargument = sent.counterargument ? 'true' : 'false';
     body.appendChild(span);
     if (i < sents.length - 1) body.appendChild(document.createTextNode(' '));
   });
@@ -383,36 +405,62 @@ function onTooltipMove(e) {
   }
 }
 
+function onSentenceClick(e) {
+  const target = e.target.closest('[data-has-tooltip]');
+  if (!target) return;
+
+  const block = target.closest('.para-block');
+  const existing = block.querySelector('.sentence-detail');
+  const alreadyOpen = target.classList.contains('detail-open');
+
+  block.querySelectorAll('.sent.detail-open').forEach(el => el.classList.remove('detail-open'));
+  if (existing) existing.remove();
+
+  if (alreadyOpen) return;
+
+  target.classList.add('detail-open');
+  const panel = el('section', 'sentence-detail');
+  buildDiagnosticContent(panel, target, { includeExactConfidence: true });
+  target.closest('.para-body').insertAdjacentElement('afterend', panel);
+}
+
 function buildTooltipContent(target) {
   tooltip.replaceChildren();
+  buildDiagnosticContent(tooltip, target, { includeExactConfidence: false });
+}
 
+function buildDiagnosticContent(container, target, options = {}) {
   const title = el('div', 'tooltip-title');
   const label = target.dataset.label || 'Sentence';
-  const conf = target.dataset.confidence ? ` · ${target.dataset.confidence}% ${target.dataset.confidenceLabel}` : '';
+  const confLabel = target.dataset.confidenceLabel || '';
+  const conf = options.includeExactConfidence && target.dataset.confidence
+    ? ` · ${target.dataset.confidence}% ${confLabel}`
+    : (confLabel ? ` · ${confLabel} confidence` : '');
   title.textContent = `${label}${conf}`;
   if (target.dataset.blend === 'true') title.textContent += ' · blend warning';
-  tooltip.appendChild(title);
+  if (target.dataset.counterargument === 'true') title.textContent += ' · opposing position';
+  container.appendChild(title);
 
-  addTooltipSection('Why this was classified this way', [
+  addDiagnosticSection(container, 'Why this was classified this way', [
     target.dataset.trigger ? `Trigger: ${target.dataset.trigger}` : '',
     ...splitDataset(target.dataset.evidence).map(item => `Evidence: ${item}`),
   ]);
 
   const competing = splitDataset(target.dataset.competing);
   if (competing.length) {
-    addTooltipSection('Other plausible labels', competing);
+    addDiagnosticSection(container, 'Other plausible labels', competing);
   }
 
   if (target.dataset.uncertainty) {
-    addTooltipSection('Why confidence is not high', [target.dataset.uncertainty]);
+    addDiagnosticSection(container, 'Why confidence is not high', [target.dataset.uncertainty]);
   }
 
   if (target.dataset.hint) {
-    addTooltipSection('What to check next', [target.dataset.hint]);
+    addDiagnosticSection(container, 'What to check next', [target.dataset.hint]);
   }
 }
 
-function addTooltipSection(titleText, rows) {
+function addDiagnosticSection(container, titleText, rows) {
   const cleanRows = rows.filter(Boolean);
   if (!cleanRows.length) return;
   const section = el('div', 'tooltip-section');
@@ -424,7 +472,7 @@ function addTooltipSection(titleText, rows) {
     line.textContent = row;
     section.appendChild(line);
   });
-  tooltip.appendChild(section);
+  container.appendChild(section);
 }
 
 function splitDataset(value) {
@@ -456,8 +504,10 @@ function clearAll() {
   pasteInput.value = '';
   docxFileInput.value = '';
   pdfFileInput.value = '';
+  rtfFileInput.value = '';
   docxFilename.textContent = '';
   pdfFilename.textContent = '';
+  rtfFilename.textContent = '';
   currentResults = null;
   focusOnly = false;
   if (toggleFocus) toggleFocus.checked = false;

@@ -27,8 +27,8 @@ body {
   line-height: 1.6;
   background: var(--bg-page);
   color: var(--text-dark);
-  min-width: 1280px;
-  overflow-x: auto;
+  min-width: 320px;
+  overflow-x: hidden;
 }
 
 /* ---- Header ---- */
@@ -451,6 +451,10 @@ details.suggestions[open] summary::before { transform: rotate(90deg); }
 .sent.conf-low { box-shadow: inset 0 -2px 0 rgba(239, 68, 68, .55); }
 .sent.conf-medium { box-shadow: inset 0 -2px 0 rgba(245, 158, 11, .45); }
 .sent.conf-high { box-shadow: none; }
+.sent.detail-open {
+  outline: 2px solid rgba(37, 99, 235, .45);
+  outline-offset: 2px;
+}
 
 /* Highlight backgrounds (semi-transparent ~25%) */
 .sent-ISSUE        { background: rgba(236, 72, 153, 0.22); }
@@ -508,6 +512,24 @@ details.suggestions[open] summary::before { transform: rotate(90deg); }
   color: #E2E8F0;
 }
 
+.sentence-detail {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid #BFDBFE;
+  border-left: 4px solid #2563EB;
+  border-radius: var(--radius);
+  background: #EFF6FF;
+  color: #1E3A8A;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sentence-detail .tooltip-title { color: #1E3A8A; }
+.sentence-detail .tooltip-section {
+  border-top: 1px solid rgba(37, 99, 235, .18);
+}
+.sentence-detail .tooltip-section-title { color: #1D4ED8; }
+.sentence-detail .tooltip-line { color: #1E40AF; }
+
 /* ---- Summary Bar ---- */
 .summary-bar {
   padding: 8px 16px;
@@ -535,3 +557,46 @@ details.suggestions[open] summary::before { transform: rotate(90deg); }
   margin-right: 5px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 900px) {
+  header {
+    padding: 9px 12px;
+  }
+
+  .app-layout {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - 42px);
+    overflow: visible;
+  }
+
+  .input-panel {
+    width: 100%;
+    min-height: 330px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .results-panel {
+    min-height: 420px;
+  }
+
+  .results-header,
+  .input-footer,
+  .summary-bar {
+    gap: 8px;
+  }
+
+  .input-footer {
+    flex-wrap: wrap;
+  }
+
+  .mode-pill {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .spacer {
+    display: none;
+  }
+}

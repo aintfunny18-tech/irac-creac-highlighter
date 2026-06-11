@@ -136,6 +136,7 @@ export function smoothByContext(sentencesData) {
       sentencesData[i].label = target;
       sentencesData[i].color_hex = LABEL_COLORS[target];
       sentencesData[i].trigger_phrase = "[context: neighbor smoothing]";
+      sentencesData[i].rule_id = "pass.context-smoothing";
     }
   }
   return sentencesData;
@@ -176,6 +177,7 @@ export function cascadeStructLabels(sentencesData) {
       sd.label = currentCascade;
       sd.color_hex = LABEL_COLORS[currentCascade];
       sd.trigger_phrase = `[para cascade: ${currentCascade.toLowerCase()}]`;
+      sd.rule_id = "pass.cascade";
     }
   }
   return sentencesData;
@@ -207,6 +209,7 @@ export function promoteLastConclusion(sentencesData) {
   last.label = "CONCLUSION";
   last.color_hex = LABEL_COLORS.CONCLUSION;
   last.trigger_phrase = "[final sentence, no strong rule signal]";
+  last.rule_id = "pass.final-conclusion";
   return sentencesData;
 }
 
@@ -232,6 +235,7 @@ export function inheritStandaloneCitations(sentencesData) {
         sd.label = prevKnownLabel;
         sd.color_hex = LABEL_COLORS[prevKnownLabel];
         sd.trigger_phrase = "[standalone citation — inherits preceding label]";
+        sd.rule_id = "pass.standalone-citation";
       }
     }
   }

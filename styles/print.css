@@ -1,0 +1,58 @@
+/* Print stylesheet: a clean annotated handout. Browser print-to-PDF doubles
+   as the "annotated PDF" export. */
+
+@media print {
+  .app-header .header-actions,
+  .input-panel,
+  .input-collapsed-bar,
+  .results-toolbar .toolbar-actions,
+  .results-toolbar .legend-item input,
+  .sentence-detail .correction-row,
+  #tooltip,
+  #btn-reset-corrections {
+    display: none !important;
+  }
+
+  body,
+  .app-layout,
+  .results-panel,
+  .results-scroll {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+
+  .app-header {
+    border-bottom: 2px solid #000;
+    padding: 0 0 0.3rem;
+  }
+
+  .results-toolbar {
+    border: none;
+    padding: 0.4rem 0;
+  }
+
+  .para-block {
+    break-inside: avoid;
+    border: 1px solid #999;
+    margin-bottom: 0.6rem;
+  }
+
+  .sent,
+  .legend-chip {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .summary-bar {
+    display: flex !important;
+    border-top: 2px solid #000;
+  }
+}

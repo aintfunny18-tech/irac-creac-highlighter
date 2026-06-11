@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Writing Structure Coach — IRAC/CREAC Highlighter</title>
+  <meta
+    name="description"
+    content="Paste or upload 1L legal writing and see every sentence classified as Issue, Rule, Explanation, Application, or Conclusion — with plain-English coaching. Runs entirely in your browser."
+  />
+  <meta name="theme-color" content="#1d4ed8" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png" />
+  <link rel="stylesheet" href="./styles/tokens.css" />
+  <link rel="stylesheet" href="./styles/app.css" />
+  <link rel="stylesheet" href="./styles/print.css" />
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    (function () {
+      try {
+        var saved = localStorage.getItem("lwsc-theme");
+        if (saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch (e) { /* storage unavailable; default to light */ }
+    })();
+  </script>
+</head>
+<body>
+
+<header class="app-header">
+  <h1 class="app-title">
+    Legal Writing Structure Coach
+    <span class="subtitle">IRAC / CREAC sentence highlighter for 1L writing — runs entirely in your browser</span>
+  </h1>
+  <div class="header-actions">
+    <button class="btn btn-sm" id="btn-example-memo" title="Load a well-formed CREAC office memo">
+      Example: Office memo
+    </button>
+    <button class="btn btn-sm" id="btn-example-exam" title="Load a flawed IRAC exam answer">
+      Example: Exam answer
+    </button>
+    <button class="btn btn-sm btn-ghost" id="btn-theme" aria-label="Toggle dark mode">🌙</button>
+  </div>
+</header>
+
+<div class="app-layout">
+
+  <!-- Collapsed input bar (shown on phones after analysis) -->
+  <div class="input-collapsed-bar">
+    <span id="collapsed-source">Analyzed</span>
+    <button class="btn btn-sm" id="btn-edit-input">Edit input</button>
+  </div>
+
+  <!-- ============================ INPUT ============================ -->
+  <section class="input-panel" aria-label="Input">
+
+    <div class="tab-bar" role="tablist" aria-label="Input method">
+      <button class="tab-btn" role="tab" id="tabbtn-paste" aria-selected="true" aria-controls="tab-paste" data-tab="paste">
+        Paste text
+      </button>
+      <button class="tab-btn" role="tab" id="tabbtn-docx" aria-selected="false" aria-controls="tab-docx" data-tab="docx">
+        Upload .docx
+      </button>
+      <button class="tab-btn" role="tab" id="tabbtn-pdf" aria-selected="false" aria-controls="tab-pdf" data-tab="pdf">
+        Upload .pdf
+      </button>
+    </div>
+
+    <div class="tab-content active" id="tab-paste" role="tabpanel" aria-labelledby="tabbtn-paste">
+      <textarea
+        id="paste-input"
+        placeholder="Paste your legal writing draft here — an exam answer, memo discussion section, or single paragraph…"
+        aria-label="Paste text input"
+      ></textarea>
+    </div>
+
+    <div class="tab-content" id="tab-docx" role="tabpanel" aria-labelledby="tabbtn-docx">
+      <label class="file-drop-zone" id="docx-drop" for="docx-file-input">
+        <span class="file-icon">📄</span>
+        <span>Click or drag a <strong>.docx</strong> file here</span>
+        <span class="file-note">Word documents only · processed in your browser, never uploaded</span>
+        <input type="file" id="docx-file-input" accept=".docx" />
+      </label>
+      <div class="file-selected-name" id="docx-filename"></div>
+    </div>
+
+    <div class="tab-content" id="tab-pdf" role="tabpanel" aria-labelledby="tabbtn-pdf">
+      <label class="file-drop-zone" id="pdf-drop" for="pdf-file-input">
+        <span class="file-icon">📋</span>
+        <span>Click or drag a <strong>.pdf</strong> file here</span>
+        <span class="file-note">Text-based PDFs only (not scanned) · processed in your browser</span>
+        <input type="file" id="pdf-file-input" accept=".pdf" />
+      </label>
+      <div class="file-selected-name" id="pdf-filename"></div>
+    </div>
+
+    <div class="message-area" aria-live="polite">
+      <div class="msg msg-error" id="msg-error" role="alert"></div>
+      <div class="msg msg-warning" id="msg-warning"></div>
+    </div>
+
+    <div class="input-footer">
+      <span class="mode-pill" title="The tool detects the framework of each paragraph automatically">
+        Auto-detects IRAC / RAC / CRAC / CREAC
+      </span>
+      <div class="spacer"></div>
+      <button class="btn" id="btn-clear">Clear</button>
+      <button class="btn btn-primary" id="btn-analyze">Analyze</button>
+    </div>
+
+  </section>
+
+  <!-- ============================ RESULTS ============================ -->
+  <section class="results-panel" aria-label="Analysis results">
+
+    <div class="results-toolbar" id="results-toolbar">
+      <span style="font-weight:700">Legend</span>
+      <label class="legend-item">
+        <input type="checkbox" data-label="ISSUE" checked />
+        <span class="legend-chip chip-ISSUE">Issue</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="RULE" checked />
+        <span class="legend-chip chip-RULE">Rule</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="EXPLANATION" checked />
+        <span class="legend-chip chip-EXPLANATION">Explanation</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="APPLICATION" checked />
+        <span class="legend-chip chip-APPLICATION">Application</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="CONCLUSION" checked />
+        <span class="legend-chip chip-CONCLUSION">Conclusion</span>
+      </label>
+      <label class="legend-item">
+        <input type="checkbox" data-label="UNCLASSIFIED" checked />
+        <span class="legend-chip chip-UNCLASSIFIED">Unclassified</span>
+      </label>
+      <span class="legend-item"><span class="legend-blend-chip">blend</span></span>
+      <span class="toolbar-divider" role="presentation"></span>
+      <span class="confidence-key" title="Underline shows how confident the tool is">
+        <span class="conf-mark conf-key-low"></span> low
+        <span class="conf-mark conf-key-medium"></span> med
+      </span>
+      <label class="legend-item">
+        <input type="checkbox" id="toggle-focus" />
+        <span>Warnings only</span>
+      </label>
+      <div class="toolbar-actions">
+        <button class="btn btn-sm" id="btn-print" disabled title="Print or save as PDF">Print</button>
+        <button class="btn btn-sm" id="btn-export" disabled title="Download annotated Word document">
+          Export .docx
+        </button>
+      </div>
+    </div>
+
+    <div class="results-scroll" id="results-container" tabindex="-1">
+      <div class="empty-state" id="empty-state">
+        <span class="empty-icon">⚖️</span>
+        <span>Paste or upload a legal draft, then press <strong>Analyze</strong>.</span>
+        <span class="empty-actions">
+          <button class="btn btn-sm" data-example="memo">Try an office memo</button>
+          <button class="btn btn-sm" data-example="exam">Try an exam answer</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="summary-bar" id="summary-bar">
+      <span>Paragraphs <span class="stat-val" id="stat-paras">—</span></span>
+      <span>Complete <span class="stat-val" id="stat-complete">—</span></span>
+      <span>Warnings <span class="stat-val" id="stat-warnings">—</span></span>
+      <span>Sentences <span class="stat-val" id="stat-sents">—</span></span>
+      <span>Blends <span class="stat-val" id="stat-blends">—</span></span>
+      <button class="btn btn-sm btn-ghost" id="btn-reset-corrections" hidden>
+        Reset corrections (<span id="corrections-count">0</span>)
+      </button>
+    </div>
+
+  </section>
+</div>
+
+<div id="tooltip" role="tooltip" aria-hidden="true"></div>
+
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

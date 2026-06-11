@@ -39,7 +39,8 @@ function avgConfidence(sentences) {
   return Math.round((values.reduce((a, b) => a + b, 0) / values.length) * 100);
 }
 
-export async function exportDocx(results, correctionCount = 0) {
+/** Build the annotated document and return it as a Blob (no download). */
+export async function buildDocxBlob(results, correctionCount = 0) {
   const docx = await loadDocxLib();
   const { Document, Packer, Paragraph, TextRun, HeadingLevel } = docx;
 
@@ -158,8 +159,12 @@ export async function exportDocx(results, correctionCount = 0) {
   }
 
   const doc = new Document({ sections: [{ children }] });
-  const blob = await Packer.toBlob(doc);
+  return Packer.toBlob(doc);
+}
 
+/** Build the annotated document and download it. */
+export async function exportDocx(results, correctionCount = 0) {
+  const blob = await buildDocxBlob(results, correctionCount);
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

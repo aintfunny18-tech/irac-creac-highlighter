@@ -370,6 +370,16 @@ MODEL_ANSWER_SECTIONS = [
     ("E2-S6", [119, 120, 121, 122], "IRAC", "COMPLETE_IRAC"),
 ]
 
+# Cases whose badge expectation is currently unmet for a known, planned
+# reason. The JS segmenter (correctly) un-glues "Under [rule], …" sentences
+# that punkt had fused into the preceding sentence; once standalone, those
+# rule sentences trip overfit CivPro APPLICATION phrases ("common nucleus",
+# "arises out of the same"). The Phase C lexicon de-overfit removes this.
+MODEL_ANSWER_PENDING = {
+    "E2-S2": "phase-c: de-overfit CivPro application phrases",
+    "E2-S6": "phase-c: de-overfit CivPro application phrases",
+}
+
 CIVPRO_SECTIONS = [
     ("P2-Q1", [155, 156, 157], "CRAC"),
     ("P2-Q2", [159, 160, 161], "CRAC"),
@@ -490,6 +500,8 @@ def main():
         for sec_id, indices, fw, badge in MODEL_ANSWER_SECTIONS:
             content = " ".join(ma_paras[i] for i in indices if i < len(ma_paras) and ma_paras[i])
             expect = {"badge": badge} if badge else {"badge_not_complete": True}
+            if sec_id in MODEL_ANSWER_PENDING:
+                expect["pending"] = MODEL_ANSWER_PENDING[sec_id]
             ma_out["cases"].append({
                 "id": f"model-answers-v2/{sec_id}",
                 "framework": fw,

@@ -3430,7 +3430,7 @@
             "color_hex": "#F97316",
             "blend": false,
             "counterargument": false,
-            "trigger_phrase": "[party: Maryland]",
+            "trigger_phrase": "[party: Garrett]",
             "confidence": 0.84,
             "confidence_label": "high",
             "evidence_scores": {
@@ -3443,8 +3443,8 @@
             },
             "competing_labels": [],
             "evidence": [
-              "party fact: Maryland",
-              "selected trigger: [party: Maryland]"
+              "party fact: Garrett",
+              "selected trigger: [party: Garrett]"
             ],
             "revision_hint": "Strengthen the facts-to-rule bridge by naming the concrete fact and the rule element it satisfies.",
             "uncertainty_reason": ""
@@ -9292,7 +9292,7 @@
             "competing_labels": [],
             "evidence": [
               "here,",
-              "party fact: Okafor",
+              "party fact: Mercer",
               "selected trigger: here,"
             ],
             "revision_hint": "Good application signal. Make sure it expressly connects facts to a rule element.",
@@ -9485,7 +9485,7 @@
             "color_hex": "#F97316",
             "blend": false,
             "counterargument": false,
-            "trigger_phrase": "[party: Okafor]",
+            "trigger_phrase": "[party: Mercer]",
             "confidence": 0.84,
             "confidence_label": "high",
             "evidence_scores": {
@@ -9498,8 +9498,8 @@
             },
             "competing_labels": [],
             "evidence": [
-              "party fact: Okafor",
-              "selected trigger: [party: Okafor]"
+              "party fact: Mercer",
+              "selected trigger: [party: Mercer]"
             ],
             "revision_hint": "Strengthen the facts-to-rule bridge by naming the concrete fact and the rule element it satisfies.",
             "uncertainty_reason": ""

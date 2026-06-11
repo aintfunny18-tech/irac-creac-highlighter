@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-06-11 - Static Web App Rebuild and Public Launch
+
+- Rebuilt the entire application as a client-side static web app (plain ES
+  modules, no build step, no server) and deployed it to GitHub Pages:
+  https://aintfunny18-tech.github.io/irac-creac-highlighter/
+- Ported the Python classification engine to JavaScript with verified parity
+  against a golden corpus generated from the Flask app; the legal-aware JS
+  sentence segmenter fixes six cases where NLTK punkt had fused real sentence
+  boundaries inside citations.
+- De-overfit the CivPro tuning phrases: doctrinal-test wording ("common
+  nucleus", "arises out of the same transaction") no longer classifies
+  citation-bearing rule statements as application. Added a hedged-final-
+  outcome guard, case-illustration continuation pass, and new evidence
+  signals (trailing citations, quoted authority, normative modals,
+  predictive outcome language).
+- Added a hand-labeled corpus across Contracts, Torts, Crim, Property, and
+  ConLaw; the CI accuracy gate enforces per-label floors (currently 198/198
+  sentences, 65/65 badges including the professor-material local corpus).
+- New UI: mobile-first responsive layout, dark mode, accessible tap/keyboard
+  sentence details, click-to-correct labels with live badge/score updates,
+  built-in example documents, print stylesheet, and in-browser annotated
+  .docx export.
+- PWA: installable, fully offline after first visit; deploys run tests and
+  the accuracy gate before publishing, with a guard against shipping any
+  source documents.
+- The original Python/Flask desktop app is archived under `archive/flask-app`
+  (still runnable; no longer maintained).
+
+Validation:
+- `node --test "test/*.test.mjs"` (83 tests)
+- `node tools/accuracy-report.mjs --ci`
+- Browser smoke tests (desktop + 375px mobile, light/dark) locally and on
+  the live URL, including .docx/.pdf parsing and export round-trip.
+
 ## 2026-05-24 - Claude Review Cleanup
 
 - Moved classifier phrase dictionaries, regex patterns, label colors, suggestions, and party-name stopwords into `app/constants.py`.

@@ -1,65 +1,91 @@
 # Legal Writing Structure Coach
 
-A fully offline Python desktop application for law students to identify and correct structural deficiencies in legal writing drafts (practice exams, memos).
+**Live app: https://aintfunny18-tech.github.io/irac-creac-highlighter/**
 
-## What It Does
+A teaching tool for 1L legal writing. Paste an exam answer or memo discussion
+section and every sentence is highlighted by its structural role — Issue,
+Rule, Explanation, Application, Conclusion — with plain-English coaching on
+what each paragraph is doing well and what to fix first.
 
-- Accepts drafts via plain text paste, `.docx` upload, `.pdf` upload, or `.rtf` upload
-- Automatically detects IRAC, RAC, CRAC, and CREAC structure by paragraph
-- Classifies each sentence as a structural component (Issue, Rule, Explanation, Application, Conclusion, or Unclassified)
-- Displays sentence-level color highlighting, paragraph badges, structure scores, and revision-priority coaching
-- Shows structured hover explanations with trigger phrase, evidence, confidence, competing labels, uncertainty notes, and next-step hints
-- Flags structural problems (missing rules, missing applications, missing conclusions, rule/application blends, premature application, and low-confidence highlights)
-- Exports an annotated `.docx` copy with highlights, badges, confidence, structure scores, training summaries, and top revision priorities
+Everything runs **entirely in the browser**: no server, no account, and
+student writing never leaves the device. After the first visit the app also
+works offline (installable as a PWA on phones and tablets).
 
-## Prerequisites
+## What it does
 
-- Python 3.10 or higher
-- pip
+- Accepts drafts via paste, `.docx` upload, or `.pdf` upload (parsed locally)
+- Detects IRAC / RAC / CRAC / CREAC structure paragraph by paragraph
+- Highlights each sentence by structural role with confidence bands
+- Explains every classification in plain English — hover (or tap) any
+  sentence for *why this label*, competing labels, and a next-step hint
+- Awards paragraph badges (✅ Complete, ⚠️ Missing Rule, ⚠️ Blend, …) with a
+  structure score and ordered revision priorities
+- Flags rule/application blends, premature application, rule dumps,
+  counterarguments that need answering, and rule/application splits across
+  paragraphs
+- **Click-to-correct:** when the tool gets a sentence wrong, set the label
+  yourself — badges, scores, and coaching update instantly
+- One-click **example documents** (a well-formed CREAC office memo and a
+  deliberately flawed IRAC exam answer) for classroom demos
+- Exports an annotated `.docx` or a printable view (print → save as PDF)
 
-## Installation
+## How the classifier thinks
+
+The classifier is a transparent, deterministic rule engine — no AI model, no
+network calls. For each sentence it asks, in priority order: explicit section
+labels (`Rule:` / `Analysis:`) → issue framing (“whether…”) → opposing-party
+framing → conclusion signals (position openers, “Therefore,” hedged outcome
+predictions) → application signals (“Here,”, party names + factual verbs,
+case-specific subjects) → rule signals (citations, standard phrases like
+“must establish”, definitional structure, generic legal subjects) → case
+illustrations (CREAC). Secondary passes then smooth context, cascade section
+labels, detect blended sentences, and score the evidence behind every label
+so the tool can show its work.
+
+It will not reach 100% accuracy — legal writing blends roles, and that is
+part of the lesson. Confidence bands and the click-to-correct feature are
+designed around that honesty: low-confidence highlights are coaching prompts,
+not verdicts.
+
+## Development
+
+No build step. The app is plain ES modules served as static files.
 
 ```bash
-pip install -r requirements.txt
+# serve locally (any static server works)
+python -m http.server 4173
+
+# run the test suite (Node 22+)
+node --test "test/*.test.mjs"
+
+# accuracy report (per-label precision/recall, confusion matrix, CI gate)
+node tools/accuracy-report.mjs
+
+# confidence calibration report
+node tools/calibrate-confidence.mjs
 ```
 
-**Note:** The first run will automatically download NLTK tokenizer data (~1 MB). An internet connection is required for this one-time download only. All subsequent runs are fully offline.
-
-## Usage
-
-```bash
-python run.py
-```
-
-The app starts a local server and opens your default browser automatically. If port 5050 is in use, it will try ports 5051–5060.
-
-## Input Modes
-
-| Mode | Description |
+| Path | Contents |
 |---|---|
-| Paste Text | Paste draft text directly into the text area |
-| Upload .docx | Upload a Word document |
-| Upload .pdf | Upload a PDF (text-based; scanned/image PDFs are not supported) |
-| Upload .rtf | Upload an RTF document |
+| `js/engine/` | DOM-free classification engine (rule table, passes, evidence, badges, coaching) |
+| `js/parse/` | Paste/.docx/.pdf ingestion (mammoth.js, pdf.js — vendored) |
+| `js/ui/` | Rendering, tooltips/detail panels, corrections |
+| `js/export/` | Annotated .docx generation (docx — vendored) |
+| `test/corpus/` | Hand-labeled corpus across 1L subjects; expectations drive the CI accuracy gate |
+| `examples/` | The built-in demo documents (badge-pinned by tests) |
+| `tools/` | Accuracy report, calibration report, icon generator |
+| `archive/` | The original Python/Flask desktop app (retired, kept runnable) |
 
-## Frameworks
+Deployments run automatically from `main` via `.github/workflows/pages.yml`:
+syntax checks → tests → accuracy gate → publish. A guard step blocks any
+source documents from reaching the public artifact.
 
-- **IRAC** — Issue, Rule, Application, Conclusion
-- **RAC** — Rule, Application, Conclusion
-- **CRAC** — Conclusion, Rule, Application, Conclusion
-- **CREAC** — Conclusion (opening), Rule, Explanation, Application, Conclusion (closing)
-
-## Training Features
-
-- **Structure score** gives a rough 0-100 completeness signal for discussion and triage, not grading.
-- **Revision priorities** identify the most useful structural fix for a paragraph.
-- **Confidence bands** help students see when a highlight is a strong read versus a tentative coaching guess.
-- **Focus filter** shows only warning, blended, or low-confidence paragraphs.
-
-## Known Limitations
+## Known limitations
 
 - Scanned or image-based PDFs are not supported (no OCR)
 - Text boxes, headers, and footers in `.docx` files are not extracted
-- Two-column PDFs may produce garbled text extraction
-- Structure scores and confidence are heuristic coaching aids, not statistical probabilities or formal assessments
-- `.docx` export uses Word's limited highlight palette; APPLICATION sentences appear in mustard yellow (closest available to orange)
+- Multi-column PDFs may produce garbled text extraction
+- Structure scores and confidence are heuristic coaching aids, not
+  statistical probabilities or formal assessments
+- `.docx` export uses Word's limited highlight palette; APPLICATION
+  sentences appear in mustard yellow (closest available to orange)

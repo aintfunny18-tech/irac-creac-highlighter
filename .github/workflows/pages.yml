@@ -1,0 +1,72 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Syntax checks
+        run: |
+          find js examples -name '*.js' -not -path 'js/vendor/*' -print0 \
+            | xargs -0 -n1 node --check
+          node --check service-worker.js
+
+      - name: Tests
+        run: node --test "test/*.test.mjs"
+
+      - name: Accuracy gate
+        run: node tools/accuracy-report.mjs --ci
+
+      - name: Build static Pages artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp index.html offline.html manifest.webmanifest service-worker.js _site/
+          cp -r styles js examples assets _site/
+          rm -f _site/js/vendor/README.md
+          touch _site/.nojekyll
+          if find _site -name '*.md' -o -name '*.docx' -o -name '*.pdf' -o -name '*.py' -o -name '*.rtf' | grep -q .; then
+            echo "Source documents must not be published in the Pages artifact."
+            find _site -name '*.md' -o -name '*.docx' -o -name '*.pdf' -o -name '*.py' -o -name '*.rtf'
+            exit 1
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

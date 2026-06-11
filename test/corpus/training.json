@@ -1,0 +1,57 @@
+{
+  "source": "training",
+  "cases": [
+    {
+      "id": "training/sentence-diagnostics",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The court should consider fairness and efficiency."
+      ],
+      "expect": {
+        "first_sentence_confidence_label_in": [
+          "low",
+          "medium"
+        ]
+      }
+    },
+    {
+      "id": "training/paragraph-training-fields",
+      "framework": "AUTO",
+      "paragraphs": [
+        "Here, Dana shoved Lee during the argument. Therefore, Dana is likely liable."
+      ],
+      "expect": {
+        "priority_kinds": [
+          "missing_rule",
+          "unsupported_application"
+        ]
+      }
+    },
+    {
+      "id": "training/creac-explanation-and-competing-labels",
+      "framework": "AUTO",
+      "paragraphs": [
+        "Dana is likely liable for battery. Battery requires intentional harmful or offensive contact. In Garratt v. Dailey, the court found that intent existed because contact was substantially certain. Here, Dana shoved Lee in the shoulder. Therefore, Dana is likely liable."
+      ],
+      "expect": {
+        "effective_framework": "CREAC",
+        "has_label": [
+          "EXPLANATION"
+        ]
+      }
+    },
+    {
+      "id": "training/cross-paragraph-training-priority",
+      "framework": "AUTO",
+      "paragraphs": [
+        "Battery requires intentional harmful or offensive contact.",
+        "Here, Dana shoved Lee during the argument. Therefore, Dana is likely liable."
+      ],
+      "expect": {
+        "priority_kinds_para0": [
+          "cross_paragraph_split"
+        ]
+      }
+    }
+  ]
+}

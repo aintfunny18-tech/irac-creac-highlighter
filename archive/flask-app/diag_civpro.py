@@ -1,4 +1,4 @@
-# diag_civpro.py — CivPro model answer sentence-level accuracy diagnostic
+﻿# diag_civpro.py — CivPro model answer sentence-level accuracy diagnostic
 import sys, io, os, re
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 sys.path.insert(0, os.path.dirname(__file__))
@@ -40,8 +40,7 @@ SECTIONS = [
     ("E2-S2", "Essay 2 Sub-2: Expert Locality Rule",        [202, 203, 204, 205],                "IRAC"),
 ]
 
-doc = Document(os.path.join(os.path.dirname(__file__),
-                            'CivPro_II_Exam1_Piedmont_Healthcare.docx'))
+doc = Document(os.path.join(os.path.dirname(__file__), '..', '..', 'CivPro_II_Exam1_Piedmont_Healthcare.docx'))
 all_paras = [p.text.strip() for p in doc.paragraphs]
 
 total_correct = 0

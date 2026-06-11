@@ -1,4 +1,4 @@
-"""
+﻿"""
 QA test script for the IRAC/CREAC classifier.
 
 Reads Legal_Writing_Structure_Coach_Test_Document_v1.0.docx, groups each test case's content
@@ -104,7 +104,7 @@ def load_test_cases(docx_path: str) -> dict[str, tuple[str, list[str]]]:
 
 @pytest.fixture(scope="module")
 def demo_cases() -> dict[str, tuple[str, list[str]]]:
-    docx = os.path.join(os.path.dirname(__file__), "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
+    docx = os.path.join(os.path.dirname(__file__), "..", "test-docs", "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
     return load_test_cases(docx)
 
 

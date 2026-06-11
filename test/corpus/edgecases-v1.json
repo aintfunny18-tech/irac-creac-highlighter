@@ -1,0 +1,125 @@
+{
+  "source": "edgecases-v1",
+  "cases": [
+    {
+      "id": "edgecases-v1/EC-01",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether Fowler's statement to reporters constitutes actionable defamation per se. A statement is defamatory per se when it falls within a recognized category requiring no proof of special damages, including statements that impute commission of a crime or statements that injure a plaintiff in her trade or profession. See Milkovich v. Lorain Journal Co., 497 U.S. 1 (1990). Pure expressions of opinion on matters of public concern receive absolute First Amendment protection and cannot support a defamation claim. In Milkovich, the Court rejected a categorical opinion privilege, holding that a statement could be actionable even if couched in opinion language when a reasonable reader would interpret it as implying an assertion of objective fact. There, the court found that a sports columnist's assertion that a wrestling coach \"lied\" at a judicial proceeding carried a sufficiently factual connotation to survive a motion to dismiss, because it implied the commission of perjury — a crime. In the present case, Fowler told a television reporter that Delgado \"has been stealing from the register for years,\" referring to Delgado's management of the family restaurant. Unlike pure opinion, Fowler's statement implied specific, verifiable facts — that Delgado committed theft on repeated occasions. Because this statement imputes a criminal act and concerns Delgado's professional conduct, it falls within a category of defamation per se requiring no proof of special damages. Therefore, Fowler's statement likely constitutes defamation per se, and Delgado need not prove special damages to recover."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-02",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether the elements of common law fraud are satisfied on these facts. To establish fraud, a plaintiff must prove that the defendant made a false representation of a material fact, that the defendant knew the representation was false or made it recklessly without knowledge of its truth, that the defendant intended the plaintiff to rely on the representation, that the plaintiff did in fact rely on the representation, and that the plaintiff suffered damages as a result of that reliance. Here, Mercer told Okafor that the investment fund had returned twelve percent annually for the past decade. Mercer knew this was false — the fund had posted losses in four of those ten years. Mercer made the representation specifically to induce Okafor to invest her retirement savings. Okafor transferred $180,000 into the fund within a week of the meeting, and the fund subsequently collapsed. Each element of fraud is therefore satisfied on these facts. Accordingly, Okafor is likely to prevail on a common law fraud claim against Mercer."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-03",
+      "framework": "IRAC",
+      "paragraphs": [
+        "This memorandum addresses three discrete legal questions arising from the transaction between Caldwell Realty and the Nguyen family trust. First, whether the earnest money deposit is forfeitable as liquidated damages under the terms of the purchase agreement. Second, whether the disclosure obligations under Maryland's real property statute were satisfied by the seller's agent. Third, whether the doctrine of equitable conversion vested title in the buyers prior to the scheduled closing date. Each issue is addressed in turn below."
+      ],
+      "expect": {
+        "badge": "INFO_INTRODUCTORY"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-04",
+      "framework": "IRAC",
+      "paragraphs": [
+        "Therefore, the first element — actual notice — is likely satisfied."
+      ],
+      "expect": {
+        "badge": "INFO_INTRODUCTORY"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-05",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether the Employee Retirement Income Security Act preempts Carmichael's state-law breach of fiduciary duty claim. ERISA broadly preempts any state law that \"relates to\" an employee benefit plan covered under the statute. 29 U.S.C. § 1144(a). The Supreme Court has held that a state law \"relates to\" an ERISA plan if it has a connection with or reference to such a plan, even if the state law was not specifically designed to affect ERISA plans. Shaw v. Delta Air Lines, Inc., 463 U.S. 85, 96–97 (1983). However, the Court has also recognized that ERISA preemption is not limitless and that state laws of general applicability that affect ERISA plans only incidentally may survive preemption analysis. New York State Conference of Blue Cross & Blue Shield Plans v. Travelers Ins. Co., 514 U.S. 645 (1995)."
+      ],
+      "expect": {
+        "badge": "WARNING_MISSING_APPLICATION"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-06",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Solvang Pharmaceutical had the requisite knowledge to satisfy the actual malice standard. To recover punitive damages for defamation, a public figure plaintiff must prove by clear and convincing evidence that the defendant published the defamatory statement with actual malice — that is, with knowledge of its falsity or with reckless disregard of whether it was false or not. New York Times Co. v. Sullivan, 376 U.S. 254, 279–280 (1964). Reckless disregard requires proof that the defendant entertained serious doubts as to the truth of the publication. St. Amant v. Thompson, 390 U.S. 727, 731 (1968). Solvang's communications director received a memorandum from the research team three days before publication explicitly flagging the contested efficacy data as \"unverified and potentially misleading.\" Solvang published the press release without amendment, without requesting verification, and without disclosing the internal flag to its editorial review board. The communications director later testified that she \"figured it was probably fine.\" That testimony, combined with the withheld memorandum, establishes that Solvang entertained serious doubts about the truth of the efficacy claims before publishing them. Accordingly, a court would likely find that the actual malice standard is satisfied by clear and convincing evidence."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-07",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether the non-compete agreement is enforceable against Whitmore under Virginia law. Virginia courts enforce non-compete agreements only when they are narrowly drawn to protect the employer's legitimate business interests, are not unduly burdensome on the employee's ability to earn a living, and are not against public policy. Assurance Data, Inc. v. Malyevac, 286 Va. 137, 142 (2013). The burden of proving reasonableness rests with the employer, not the employee. Therefore, a non-compete that is facially overbroad will be unenforceable as a matter of law without resort to a blue-penciling remedy, because Virginia courts do not reform unreasonable covenants — they void them entirely. Whitmore's agreement prohibited her from working \"in any capacity related to data analytics or software development anywhere in the continental United States\" for a period of three years following separation. Whitmore's role had been limited to a single product line serving clients in the mid-Atlantic region. Because the geographic scope of the restriction — the entire continental United States — bears no reasonable relationship to the employer's actual business footprint in Whitmore's area of work, the agreement is facially overbroad on its geographic terms alone. Accordingly, the non-compete agreement is likely unenforceable against Whitmore under Virginia law."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-08",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The remaining question on causation is whether Reinhart's failure to inspect the scaffolding was the proximate cause of the worker's injuries. Under the \"but for\" test for actual causation, a defendant's negligence is a cause in fact of the plaintiff's injury if the injury would not have occurred but for that negligence. Perkins v. Terra Firma Constr., LLC, 409 Md. 241, 258 (2009). Here, the uncontested expert testimony establishes that the scaffolding collapse would not have occurred had the mandatory weekly inspection been performed, because the fatigue fracture that caused the failure was visible to the naked eye and would have required only minor reinforcement to prevent. Because the injury would not have occurred but for Reinhart's omission, actual causation is satisfied. Therefore, a court would likely find that causation is established as a matter of law on these facts."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-09",
+      "framework": "CREAC",
+      "paragraphs": [
+        "The restrictive covenant is enforceable as an equitable servitude running with Parcel 14. An equitable servitude runs with the land and binds subsequent purchasers when the original parties intended the restriction to run, the subsequent purchaser took with notice of the restriction, and the restriction touches and concerns the land. Neponsit Property Owners' Ass'n v. Emigrant Industrial Sav. Bank, 278 N.Y. 248 (1938). In Neponsit, the court enforced a covenant obligating a homeowner's association to maintain common areas against a subsequent purchaser who had taken title with constructive notice of the recorded restriction. The court held that a covenant \"touches and concerns\" the land when it affects the legal relations of the parties as landowners, not merely as individuals. The recording of the restriction in the chain of title was sufficient to impute notice to the subsequent buyer. In the present case, the restriction limiting Parcel 14 to single-family residential use was recorded in the original subdivision plat and has appeared unbroken in the chain of title since 1987. Garrison, the current owner, conducted a title search prior to purchase and received a title commitment that expressly identified the restriction. The restriction plainly touches and concerns the land — it directly governs how the parcel may be used. All three elements of an equitable servitude are satisfied. The covenant therefore runs with Parcel 14 and is enforceable against Garrison as a subsequent purchaser with record notice."
+      ],
+      "expect": {
+        "badge": "COMPLETE_CREAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-10",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The first question is whether an offer was made. Under the objective theory of contracts, a valid offer requires a manifestation of present contractual intent, definite terms, and communication to the offeree. Restatement (Second) of Contracts § 24. Here, Osei's letter stated \"I will sell you the warehouse at 44 Commerce Street for $2.1 million, payable at closing on December 1st\" — language that objectively manifests present intent and supplies all material terms. Therefore, Osei's letter constitutes a valid offer. The second question is whether that offer was timely accepted. Under the mailbox rule, an acceptance is effective upon proper dispatch, regardless of when the offeror receives it. Morrison v. Thoelke, 155 So. 2d 889 (Fla. Dist. Ct. App. 1963). In this case, Vandenberg deposited her written acceptance in the mail on November 28th, two days before the December 1st deadline specified in the offer. Because the acceptance was dispatched before the deadline, it was effective upon mailing under the mailbox rule. Therefore, a binding contract was formed no later than November 28th."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-11",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether the economic loss rule bars Donovan's negligence claim against the architectural firm. It is generally recognized that the economic loss rule bars tort recovery for purely economic losses unaccompanied by physical injury or property damage, where the parties' relationship is governed by contract. Most jurisdictions have adopted some version of this rule to prevent the law of negligence from swallowing contract law. Courts have sometimes held, however, that the economic loss rule does not apply where the defendant assumed a duty of care independent of any contractual obligation — particularly in the context of professional services such as architectural or engineering work. See Bily v. Arthur Young & Co., 3 Cal. 4th 370 (1992). Here, Donovan and the firm had no direct contractual relationship — Donovan was a third-party purchaser of the building, not a party to the design contract. The firm's alleged negligence in specifying an undersized load-bearing column resulted in purely economic losses: the cost of remediation and lost rental income, but no personal injury. Because the parties were not in privity and the losses are purely economic, the general rule would bar recovery. Whether the independent-duty exception applies will depend on whether the firm can be said to have assumed a duty of care toward downstream purchasers, which the facts do not clearly establish. Therefore, the economic loss rule likely bars Donovan's negligence claim, absent evidence of an independent duty owed to third-party purchasers."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "edgecases-v1/EC-12",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Marchetti's conduct satisfies the elements of conversion. Conversion is the intentional exercise of dominion or control over a chattel that so seriously interferes with the right of another to control it that the actor may justly be required to pay the other the full value of the chattel. Restatement (Second) of Torts § 222A. Courts assess the seriousness of the interference by considering the extent and duration of the actor's exercise of dominion, whether the actor acted in good faith, and the extent of the harm done to the chattel. Marchetti retained Niles's excavator for eleven months without authorization, used it across fourteen commercial job sites, and returned it with a fractured hydraulic arm requiring $22,000 in repairs. The duration of the unauthorized retention, the commercial scale of its use, and the extent of the physical damage each weigh heavily in favor of a finding of conversion rather than mere trespass to chattels. Marchetti's claim that he believed he had an \"informal arrangement\" with Niles is not credible given the duration of the retention and the absence of any written or verbal agreement. The question, therefore, is not whether Marchetti is liable for conversion — he almost certainly is — but rather what measure of damages Niles may recover."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    }
+  ]
+}

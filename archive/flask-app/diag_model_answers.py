@@ -1,4 +1,4 @@
-# diag_model_answers.py — model_answer_test_bank_v2.docx accuracy diagnostic
+﻿# diag_model_answers.py — model_answer_test_bank_v2.docx accuracy diagnostic
 #
 # Two test modes per section:
 #   BADGE — join all paragraphs in a section, assert expected badge
@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from docx import Document
 from app.classifier import classify_text
 
-doc = Document(os.path.join(os.path.dirname(__file__), 'model_answer_test_bank_v2.docx'))
+doc = Document(os.path.join(os.path.dirname(__file__), '..', '..', 'model_answer_test_bank_v2.docx'))
 ALL = [p.text.strip() for p in doc.paragraphs]
 
 # ---------------------------------------------------------------------------

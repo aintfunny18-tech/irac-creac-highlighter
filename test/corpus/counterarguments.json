@@ -1,0 +1,50 @@
+{
+  "source": "counterarguments",
+  "cases": [
+    {
+      "id": "counterarguments/counterargument-gets-coaching-metadata",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The issue is whether Dana committed battery. Battery requires intentional harmful or offensive contact. The defendant will argue that the contact was accidental. However, Dana raised her hand and shoved Lee after the warning. Therefore, Dana is likely liable."
+      ],
+      "expect": {
+        "must_label": {
+          "defendant will argue": "APPLICATION"
+        },
+        "must_counterargument": [
+          "defendant will argue"
+        ],
+        "priority_kinds": [
+          "counterargument_needs_response"
+        ]
+      }
+    },
+    {
+      "id": "counterarguments/counterargument-is-not-bare-conclusion-in-crac-opener",
+      "framework": "CRAC",
+      "paragraphs": [
+        "Defendant will argue that the search was reasonable. The Fourth Amendment requires a warrant unless an exception applies. Here, the officer searched the bag without consent or exigency. Therefore, the search was likely unreasonable."
+      ],
+      "expect": {
+        "must_label": {
+          "Defendant will argue": "APPLICATION"
+        },
+        "must_counterargument": [
+          "Defendant will argue"
+        ]
+      }
+    },
+    {
+      "id": "counterarguments/citation-heavy-application-stays-application",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether transfer was proper. Under 28 U.S.C. § 1404(a), a court may transfer for convenience when venue is proper. The case was transferred under § 1406(a), but the original venue was proper under § 1391. Therefore, the transfer was improper."
+      ],
+      "expect": {
+        "must_label": {
+          "transferred under": "APPLICATION"
+        }
+      }
+    }
+  ]
+}

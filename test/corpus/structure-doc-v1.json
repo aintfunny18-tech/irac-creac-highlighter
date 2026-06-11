@@ -1,0 +1,125 @@
+{
+  "source": "structure-doc-v1",
+  "cases": [
+    {
+      "id": "structure-doc-v1/A-1",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether Dr. Harmon owed a duty of care to Marcus Webb, a pedestrian struck outside the hospital entrance. Under the Restatement (Second) of Torts § 302, a defendant owes a duty of reasonable care to any person who may foreseeably be endangered by the defendant's conduct. Courts have further held that a duty arises when the risk of harm is foreseeable and the defendant's relationship to the plaintiff makes it appropriate to impose an obligation of care. See Palsgraf v. Long Island R.R., 248 N.Y. 339 (1928). Here, Dr. Harmon exited the hospital at high speed while reviewing patient charts on her tablet, without looking up as she pushed through the exterior doors. Webb was standing directly in front of the exit, a location that any reasonable person would recognize as a zone of foreseeable pedestrian traffic. Because Dr. Harmon's inattentive conduct created a foreseeable risk of harm to persons in that zone, she owed Webb a duty of reasonable care. Therefore, a court would likely find that Dr. Harmon owed a duty of care to Marcus Webb."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "structure-doc-v1/A-2",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Elaine Pruitt has established title to the disputed parcel through adverse possession. To establish title by adverse possession, a claimant must prove that her possession was actual, open and notorious, exclusive, hostile, and continuous for the statutory period. See Howard v. Kunto, 3 Wash. App. 393 (1970). In Maryland, the statutory period for adverse possession is twenty years. Md. Code Ann., Real Prop. § 7-101. In this case, Pruitt erected a fence enclosing the disputed strip in 2001, planted and maintained a vegetable garden throughout the following seasons, and paid taxes on the parcel. Her possession was therefore actual and open: the fence and cultivation were visible improvements that put any reasonable landowner on notice. Because she excluded all others, including the record title holder, Garrett, who never entered the parcel during this period, her possession was also exclusive. Pruitt's possession continued without interruption from 2001 through 2024, satisfying the twenty-year statutory period. Finally, Pruitt possessed the land without Garrett's permission, satisfying the hostility element under Maryland's objective test. Accordingly, Pruitt has likely satisfied all elements of adverse possession and a court would probably award her title to the disputed parcel."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "structure-doc-v1/A-3",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question presented is whether Tanaka's email of November 3rd constituted a valid offer capable of acceptance. Under the Restatement (Second) of Contracts § 24, an offer is a manifestation of willingness to enter into a bargain, so made as to justify another person in understanding that his assent to that bargain is invited and will conclude it. An offer must be sufficiently definite in its material terms — including price, quantity, and subject matter — to be enforceable. An advertisement or preliminary negotiation generally does not constitute an offer because it does not invite acceptance; rather, it invites offers from the other party. See Lefkowitz v. Great Minneapolis Surplus Store, 251 Minn. 188 (1957). Here, Tanaka's email stated: \"I will sell you my 2019 Land Rover for $28,500 — let me know by Friday.\" Unlike a general advertisement, Tanaka's email identified a specific buyer, a specific vehicle, a definite price, and a deadline for acceptance. Because all material terms were specified and the language directly invited Alvarez's assent, a court would likely treat the email as a valid offer rather than a mere invitation to negotiate. Thus, Tanaka's November 3rd email likely constituted a valid offer capable of acceptance by Alvarez."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC"
+      }
+    },
+    {
+      "id": "structure-doc-v1/B-1",
+      "framework": "CREAC",
+      "paragraphs": [
+        "The State is unlikely to establish that Fenwick acted with the purpose required for first-degree murder. Under the Model Penal Code § 2.02(2)(a), a person acts \"purposely\" with respect to a result when it is his conscious object to cause that result. Purpose is the most culpable mental state under the MPC hierarchy and requires more than mere knowledge that a result is practically certain to follow from one's conduct. In State v. Lyons, the court held that a defendant who fired a single shot into a crowd during a melee did not act purposely as to any particular victim's death, even though death was a foreseeable consequence, because there was no evidence that killing a specific person was his conscious object. The court distinguished purposeful conduct from knowing conduct by emphasizing that purpose requires a targeted, goal-directed mental state. Here, Fenwick fired the gun while retreating from a physical altercation in a darkened parking lot. There is no evidence that Fenwick aimed at the victim or that causing the victim's death was Fenwick's conscious object; rather, the shot appears to have been fired in a moment of panic to deter continued pursuit. Applying the MPC standard, this conduct is more consistent with recklessness or, at most, knowledge, than with purpose. Because the State cannot establish that Fenwick's conscious object was to kill, it cannot satisfy the mens rea element of first-degree murder under the MPC. Therefore, the State will likely fail to prove that Fenwick acted purposely, and a conviction for first-degree murder under the MPC is improbable on these facts."
+      ],
+      "expect": {
+        "badge": "COMPLETE_CREAC"
+      }
+    },
+    {
+      "id": "structure-doc-v1/B-2",
+      "framework": "CREAC",
+      "paragraphs": [
+        "The federal regulation is likely a constitutional exercise of Congress's Commerce Clause power. Congress may regulate the channels of interstate commerce, the instrumentalities of interstate commerce, and activities that substantially affect interstate commerce. U.S. Const. art. I, § 8, cl. 3; see also United States v. Lopez, 514 U.S. 549 (1995). For economic activity, courts apply a rational basis standard and will uphold a regulation if Congress had a rational basis for concluding that the regulated activity, taken in the aggregate, substantially affects interstate commerce. Gonzales v. Raich, 545 U.S. 1 (2005). In Gonzales v. Raich, the Court sustained the Controlled Substances Act's application to locally grown and consumed marijuana. The Court reasoned that even wholly intrastate economic activity could be regulated when, viewed in the aggregate, it substantially affects the interstate market in the regulated commodity. The Court deferred to Congress's rational basis determination and declined to require proof of a direct effect on commerce in any individual case. Here, the challenged regulation governs the pricing and distribution of generic pharmaceutical compounds sold across state lines. This is quintessentially economic activity occurring within established channels of interstate commerce. Applying the Raich framework, a court would find that Congress had a rational basis to conclude that pricing practices in the generic drug market, taken in the aggregate, substantially affect the interstate pharmaceutical market. Because the regulated activity is economic and moves through interstate channels, the most stringent prongs of the Lopez test are not implicated. In sum, the regulation falls comfortably within Congress's commerce power, and a court would likely sustain it as constitutional."
+      ],
+      "expect": {
+        "badge": "COMPLETE_CREAC"
+      }
+    },
+    {
+      "id": "structure-doc-v1/C-1",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Meridian Corp. breached its contract with Delacroix Supplies. Here, Meridian failed to deliver the contracted shipment of industrial bearings by the agreed date of September 15th. Because Meridian's own warehouse logs confirm that the bearings were not dispatched until September 22nd, the delay was entirely within Meridian's control. Delacroix suffered direct losses as a result, including shutdown costs and penalties from its downstream buyers. Since Meridian offered no valid excuse for the late delivery, its performance clearly fell short of what the contract required. Accordingly, Meridian likely breached its contract with Delacroix Supplies."
+      ],
+      "expect": {
+        "badge": "WARNING_MISSING_RULE"
+      }
+    },
+    {
+      "id": "structure-doc-v1/C-2",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether Priya Nair committed a battery against James Osorio. Under the Restatement (Third) of Torts § 101, a person is subject to liability for battery when he or she acts intending to cause a harmful or offensive contact with the person of another, and such contact directly or indirectly results. The intent element requires only that the defendant act with the purpose to cause contact, or with knowledge that such contact is substantially certain to occur. See Garratt v. Dailey, 46 Wash. 2d 197 (1955). Mere negligent contact does not constitute battery. Furthermore, the contact must be one that a reasonable person would consider offensive under the circumstances, applying an objective standard. Therefore, the outcome of Nair's battery claim will depend on whether the requisite intent can be established on the facts."
+      ],
+      "expect": {
+        "badge": "WARNING_MISSING_APPLICATION"
+      }
+    },
+    {
+      "id": "structure-doc-v1/C-3",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether Holloway can recover from Brennan Industries under a theory of promissory estoppel. Under the Restatement (Second) of Contracts § 90, a promise is enforceable without consideration if the promisor should reasonably expect the promise to induce action or forbearance, the promise does induce such action or forbearance, and injustice can be avoided only by enforcement of the promise. Here, Brennan's CEO orally promised Holloway that Holloway would be retained as the company's exclusive logistics consultant for a minimum of three years. In reliance on that promise, Holloway declined two other long-term contracts and relocated his business operations to be closer to Brennan's facilities. Because Brennan should have reasonably expected a consultant to take such concrete steps in reliance on a three-year engagement promise, and because Holloway did in fact act in substantial reliance, the first two elements of promissory estoppel are likely satisfied. The question of injustice is also compelling: Holloway declined other income-generating opportunities specifically because of Brennan's promise."
+      ],
+      "expect": {
+        "badge": "WARNING_MISSING_CONCLUSION"
+      }
+    },
+    {
+      "id": "structure-doc-v1/C-4",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Dunmore Hotel breached its duty of reasonable care to guest Patricia Lim. A defendant breaches its duty of care when its conduct falls below the standard of a reasonably prudent person under the same or similar circumstances, and here the hotel's failure to replace the torn lobby carpet for three weeks after receiving written notice from its own facilities manager, despite knowing that the high-traffic entrance created a foreseeable risk of a trip-and-fall injury to guests like Lim, plainly fell below the reasonably prudent operator standard because a reasonable hotel owner would have either cordoned off the hazard or completed repairs within forty-eight hours of receiving such notice. Accordingly, Dunmore Hotel likely breached its duty of care to Patricia Lim."
+      ],
+      "expect": {
+        "badge": "WARNING_BLEND"
+      }
+    },
+    {
+      "id": "structure-doc-v1/C-5",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The question is whether the warrantless search of Devin Carr's backpack violated the Fourth Amendment. Here, Officer Mills seized Carr's backpack from the sidewalk adjacent to an open park gate and searched it without a warrant. Because Carr had set the bag down while tying his shoe and had not abandoned it, the search reached into a zone of reasonable expectation of privacy. In this case, Mills had no valid consent, no exigent circumstances, and no arrest to support a search incident thereto. The Fourth Amendment protects individuals against unreasonable searches and seizures. U.S. Const. amend. IV. A warrantless search is presumptively unreasonable unless it falls within a recognized exception, including consent, exigent circumstances, search incident to lawful arrest, or the automobile exception. See Katz v. United States, 389 U.S. 347 (1967). Therefore, because no recognized exception applied, the warrantless search of Carr's backpack was likely unconstitutional."
+      ],
+      "expect": {
+        "badge": "WARNING_APPLICATION_WITHOUT_RULE"
+      }
+    },
+    {
+      "id": "structure-doc-v1/C-6",
+      "framework": "IRAC",
+      "paragraphs": [
+        "On the morning of April 4th, Sandra Chen arrived at her office to find that her desk had been cleared out and her access badge deactivated. She was called into a meeting with HR and her supervisor, Mr. Bautista, who informed her that her employment was being terminated effective immediately. Sandra had worked for the company for eleven years and had received positive performance reviews each year. She had recently raised concerns internally about what she believed were inaccurate billing practices directed at government clients. She was told the reason for her termination was a \"restructuring,\" though her position was filled by a new hire within three weeks. Sandra is now considering her legal options."
+      ],
+      "expect": {
+        "badge": "INFO_MOSTLY_UNCLASSIFIED"
+      }
+    },
+    {
+      "id": "structure-doc-v1/C-7",
+      "framework": "CREAC",
+      "paragraphs": [
+        "Pemberton will likely prevail on his breach of fiduciary duty claim against the fund manager. A fiduciary owes a duty of loyalty to the beneficiary, requiring the fiduciary to act in the beneficiary's best interest and to refrain from self-dealing or placing personal interests above those of the beneficiary. Restatement (Third) of Trusts § 78. Courts have consistently held that a trustee who profits personally at the expense of the trust has breached the duty of loyalty regardless of whether the trust ultimately suffers a financial loss. Here, the fund manager, Renata Voss, directed trust assets into a startup company in which she personally held a 12% equity interest, without disclosing that interest to Pemberton or seeking his consent. Because Voss stood to benefit personally from the investment, her conduct constituted textbook self-dealing under the duty of loyalty. Applying the Restatement standard, the conflict of interest alone establishes a breach regardless of the investment's ultimate performance. In Hartley v. Bremer Trust Co., the court held that a trustee who invested trust funds in a company where the trustee held an undisclosed board seat had breached the duty of loyalty, even though the investment yielded a positive return. The court reasoned that the breach is established by the existence of the conflict, not by evidence of harm. Therefore, Pemberton is likely to prevail, as Voss's self-dealing constitutes a breach of fiduciary duty under the Restatement standard."
+      ],
+      "expect": {
+        "badge": "WARNING_EXPLANATION_AFTER_APPLICATION"
+      }
+    }
+  ]
+}

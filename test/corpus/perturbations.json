@@ -1,0 +1,85 @@
+{
+  "source": "perturbations",
+  "cases": [
+    {
+      "id": "perturbations/baseline-with-signposts",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Mercer committed fraud. To establish fraud, a plaintiff must prove that the defendant made a false representation, knew it was false, intended reliance, and caused damages. Here, Mercer told Okafor that the fund returned twelve percent annually, but Mercer knew this was false. Therefore, Okafor is likely to prevail."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC",
+        "labels": [
+          "ISSUE",
+          "RULE",
+          "APPLICATION",
+          "CONCLUSION"
+        ]
+      }
+    },
+    {
+      "id": "perturbations/removed-here",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Mercer committed fraud. To establish fraud, a plaintiff must prove that the defendant made a false representation, knew it was false, intended reliance, and caused damages. Mercer told Okafor that the fund returned twelve percent annually, but Mercer knew this was false. Therefore, Okafor is likely to prevail."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC",
+        "labels": [
+          "ISSUE",
+          "RULE",
+          "APPLICATION",
+          "CONCLUSION"
+        ]
+      }
+    },
+    {
+      "id": "perturbations/removed-therefore",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Mercer committed fraud. To establish fraud, a plaintiff must prove that the defendant made a false representation, knew it was false, intended reliance, and caused damages. Here, Mercer told Okafor that the fund returned twelve percent annually, but Mercer knew this was false. Okafor is likely to prevail."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC",
+        "labels": [
+          "ISSUE",
+          "RULE",
+          "APPLICATION",
+          "CONCLUSION"
+        ]
+      }
+    },
+    {
+      "id": "perturbations/removed-both-signposts",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether Mercer committed fraud. To establish fraud, a plaintiff must prove that the defendant made a false representation, knew it was false, intended reliance, and caused damages. Mercer told Okafor that the fund returned twelve percent annually, but Mercer knew this was false. Okafor is likely to prevail."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC",
+        "labels": [
+          "ISSUE",
+          "RULE",
+          "APPLICATION",
+          "CONCLUSION"
+        ]
+      }
+    },
+    {
+      "id": "perturbations/citation-heavy-application-without-here",
+      "framework": "IRAC",
+      "paragraphs": [
+        "The issue is whether transfer was proper. Under 28 U.S.C. § 1404(a), a court may transfer for convenience when venue is proper. The case was transferred under § 1406(a), but the original venue was proper under § 1391. The transfer was improper."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC",
+        "labels": [
+          "ISSUE",
+          "RULE",
+          "APPLICATION",
+          "CONCLUSION"
+        ]
+      }
+    }
+  ]
+}

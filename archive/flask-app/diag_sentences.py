@@ -1,4 +1,4 @@
-# Sentence-level diagnostic for all 12 test cases.
+﻿# Sentence-level diagnostic for all 12 test cases.
 import sys, io, os, re
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.path.insert(0, os.path.dirname(__file__))
@@ -40,7 +40,7 @@ def load_cases(path):
     return cases
 
 
-docx_path = os.path.join(os.path.dirname(__file__), "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
+docx_path = os.path.join(os.path.dirname(__file__), "..", "test-docs", "Legal_Writing_Structure_Coach_Test_Document_v1.0.docx")
 cases = load_cases(docx_path)
 
 for case_id in sorted(cases.keys()):

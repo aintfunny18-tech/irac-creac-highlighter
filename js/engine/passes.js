@@ -87,6 +87,37 @@ export function detectBlends(sentencesData) {
 }
 
 // ---------------------------------------------------------------------------
+// Case-illustration continuation
+// ---------------------------------------------------------------------------
+
+// Midstream continuations of a case illustration: "The plaintiff there had…",
+// "It reasoned that…", "That court emphasized…". Runs before context
+// smoothing so the smoothing pass sees them as EXPLANATION already.
+const EXPLANATION_CONTINUATION_RE =
+  /^(?:the\s+(?:court|plaintiff|defendant|majority|dissent)\s+(?:there|in\s+that\s+case)\b|it\s+(?:reasoned|held|found|concluded|noted|emphasized|observed)\b|that\s+(?:court|case)\b)/i;
+
+/**
+ * Promote UNCLASSIFIED sentences that continue the previous sentence's case
+ * illustration to EXPLANATION. Only fires inside CREAC paragraphs (the only
+ * framework where EXPLANATION is a distinct label) and only on UNCLASSIFIED.
+ */
+export function continueExplanations(sentencesData, framework) {
+  if (framework !== "CREAC") return sentencesData;
+  for (let i = 1; i < sentencesData.length; i++) {
+    const sd = sentencesData[i];
+    if (sd.label !== "UNCLASSIFIED") continue;
+    if (sentencesData[i - 1].label !== "EXPLANATION") continue;
+    if (EXPLANATION_CONTINUATION_RE.test(sd.text)) {
+      sd.label = "EXPLANATION";
+      sd.color_hex = LABEL_COLORS.EXPLANATION;
+      sd.trigger_phrase = "[case illustration continues]";
+      sd.rule_id = "pass.explanation-continuation";
+    }
+  }
+  return sentencesData;
+}
+
+// ---------------------------------------------------------------------------
 // Context smoothing
 // ---------------------------------------------------------------------------
 

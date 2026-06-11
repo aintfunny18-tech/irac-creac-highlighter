@@ -34,6 +34,27 @@ const COURT_SHOULD_CONSIDER_RE = /\bthe\s+court\s+should\s+consider\b/;
 const OUTCOME_VERB_RE =
   /\b(?:liable|guilty|enforceable|proper|improper|valid|invalid|satisfied|met|prevail|succeed|fail|deny|grant|hold|find|conclude)\b/;
 
+// --- additional linguistic signals (evidence-only; they shape confidence and
+// competing labels without changing the deterministic rule table) ---
+
+// Generic legal subject + normative modal: "a defendant must…", "a party may
+// not…" — the modality of an abstract rule statement.
+const NORMATIVE_MODAL_RE =
+  /\b(?:must|shall|may\s+not|cannot|is\s+required\s+to|are\s+required\s+to)\b/;
+
+// Predictive outcome language: "would likely", "will likely", "should grant…"
+// — the modality of a conclusion about this case.
+const PREDICTIVE_OUTCOME_RE =
+  /\b(?:would\s+likely|will\s+likely|is\s+likely\s+to|should\s+(?:grant|deny|dismiss|find|hold|conclude|prevail))\b/;
+
+// A full citation at the very end of the sentence ("…, 248 N.Y. 339 (1928).")
+// is how rules and case explanations are anchored; applications cite
+// mid-sentence if at all.
+const TRAILING_CITE_RE = /(?:\(\d{4}\)|§+\s*\d[\w().–-]*)\s*[).”"']*\.?$/;
+
+// Quoted language plus a citation usually reproduces the governing standard.
+const QUOTED_AUTHORITY_RE = /["“'‘][^"”'’]{10,}["”'’]/;
+
 /** Convert transparent label scores into a stable 0.50–0.98 confidence. */
 export function confidenceFromScores(label, scores) {
   if (label === "UNCLASSIFIED") {
@@ -162,6 +183,15 @@ export function scoreSentenceEvidence(
   }
   if (hasCitation(s)) {
     addScore(scores, evidence, "RULE", 1.6, "citation");
+    if (TRAILING_CITE_RE.test(s)) {
+      addScore(scores, evidence, "RULE", 0.6, "citation anchors the sentence");
+    }
+    if (QUOTED_AUTHORITY_RE.test(s)) {
+      addScore(scores, evidence, "RULE", 0.8, "quoted authority language");
+    }
+  }
+  if (GENERIC_SUBJECT_RE.test(s) && NORMATIVE_MODAL_RE.test(sl)) {
+    addScore(scores, evidence, "RULE", 0.9, "generic subject + legal modal");
   }
 
   // Explanation evidence. In CREAC this is a distinct label; in IRAC it also
@@ -236,6 +266,9 @@ export function scoreSentenceEvidence(
     if (hedge) {
       addScore(scores, evidence, "CONCLUSION", 1.8, `final sentence + hedge: ${hedge}`);
     }
+  }
+  if (PREDICTIVE_OUTCOME_RE.test(sl) && !GENERIC_SUBJECT_RE.test(s)) {
+    addScore(scores, evidence, "CONCLUSION", 1.2, "predictive outcome language");
   }
 
   if (triggerPhrase && finalLabel !== "UNCLASSIFIED") {

@@ -18,6 +18,10 @@ const PASS_EXPLANATIONS = {
     "It closes the paragraph with an outcome assertion after rule and application work — the conclusion position.",
   "pass.standalone-citation":
     "A standalone citation supports the sentence before it, so it shares that sentence's role.",
+  "pass.explanation-continuation":
+    "It continues the case illustration begun in the previous sentence.",
+  heading:
+    "This looks like a heading or numbering fragment rather than a sentence doing IRAC/CREAC work, so it is left unhighlighted.",
   unclassified:
     "No clear structural signal was detected. That can be fine for transitions — but if this sentence is doing IRAC/CREAC work, make its role explicit.",
 };

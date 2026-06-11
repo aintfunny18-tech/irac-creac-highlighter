@@ -12,6 +12,7 @@ import { extractPartyNames } from "./parties.js";
 import { classifySentence, isCounterargument } from "./rules.js";
 import {
   cascadeStructLabels,
+  continueExplanations,
   detectBlends,
   inheritStandaloneCitations,
   promoteLastConclusion,
@@ -88,6 +89,7 @@ export function classifyText(paragraphs, framework) {
     });
 
     sentencesData = detectBlends(sentencesData);
+    sentencesData = continueExplanations(sentencesData, effectiveFramework);
     sentencesData = smoothByContext(sentencesData);
     sentencesData = cascadeStructLabels(sentencesData);
     sentencesData = promoteLastConclusion(sentencesData);

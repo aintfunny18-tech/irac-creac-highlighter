@@ -1,0 +1,119 @@
+{
+  "source": "subjects",
+  "comment": "Hand-labeled paragraphs across 1L subjects, written fresh for this project (no course materials). They pin generalization beyond the original CivPro tuning corpus.",
+  "cases": [
+    {
+      "id": "subjects/crim-larceny-complete-irac",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The issue is whether Marsh committed larceny when he took the bicycle from the rack. Larceny is the trespassory taking and carrying away of the personal property of another with intent to permanently deprive. Marsh lifted the bicycle from the rack, rode it home, and listed it for sale online that evening. Therefore, Marsh is likely guilty of larceny."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC",
+        "labels": ["ISSUE", "RULE", "APPLICATION", "CONCLUSION"]
+      }
+    },
+    {
+      "id": "subjects/crim-malice-missing-conclusion",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The issue is whether Dana acted with malice aforethought. Murder at common law requires malice aforethought, which includes an intent to kill or a depraved heart. Dana aimed the rifle at the crowd and fired three times."
+      ],
+      "expect": {
+        "badge": "WARNING_MISSING_CONCLUSION",
+        "labels": ["ISSUE", "RULE", "APPLICATION"]
+      }
+    },
+    {
+      "id": "subjects/crim-confession-blend",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The issue is whether Okafor's confession was voluntary. A confession is involuntary when police coercion overbears the suspect's will, and here the detectives questioned the suspect for nine hours and refused his requests for water. Therefore, the confession was likely involuntary."
+      ],
+      "expect": {
+        "badge": "WARNING_BLEND",
+        "labels": ["ISSUE", "RULE", "CONCLUSION"]
+      }
+    },
+    {
+      "id": "subjects/contracts-acceptance-complete-creac",
+      "framework": "AUTO",
+      "paragraphs": [
+        "Reyna's email is likely a valid acceptance. Acceptance requires a manifestation of assent to the terms of the offer, judged objectively. In Lucy v. Zehmer, 196 Va. 493 (1954), the court held that outward expressions of assent control over secret intentions. Here, Reyna replied that she would take the espresso machine at the listed price and arranged pickup. Accordingly, Reyna likely accepted the offer."
+      ],
+      "expect": {
+        "badge": "COMPLETE_CREAC",
+        "effective_framework": "CREAC",
+        "labels": ["CONCLUSION", "RULE", "EXPLANATION", "APPLICATION", "CONCLUSION"]
+      }
+    },
+    {
+      "id": "subjects/contracts-bonus-missing-rule",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The issue is whether Pell can enforce Drum's promise to pay the bonus. Here, Drum promised the bonus after Pell had already finished the renovation. Pell continued working only because she expected the bonus. The promise is likely unenforceable for lack of consideration."
+      ],
+      "expect": {
+        "badge": "WARNING_MISSING_RULE",
+        "labels": ["ISSUE", "APPLICATION", "APPLICATION", "CONCLUSION"]
+      }
+    },
+    {
+      "id": "subjects/torts-landlord-rule-dump",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The question is whether Hale breached the duty of care. A landlord must use reasonable care to protect tenants and their guests from foreseeable hazards. Courts have held that the duty extends to hazards the owner should discover through reasonable inspection. The standard is an objective one."
+      ],
+      "expect": {
+        "badge": "WARNING_MISSING_APPLICATION",
+        "labels": ["ISSUE", "RULE", "RULE", "RULE"],
+        "priority_kinds": ["missing_application", "rule_dump"]
+      }
+    },
+    {
+      "id": "subjects/property-adverse-possession-rac",
+      "framework": "AUTO",
+      "paragraphs": [
+        "Adverse possession requires possession that is actual, open and notorious, exclusive, hostile, and continuous for the statutory period. Greer fenced the disputed strip, planted a garden, and paid the property taxes on it for twelve years. Greer has likely acquired title by adverse possession."
+      ],
+      "expect": {
+        "badge": "COMPLETE_RAC",
+        "labels": ["RULE", "APPLICATION", "CONCLUSION"]
+      }
+    },
+    {
+      "id": "subjects/property-easement-app-before-rule",
+      "framework": "AUTO",
+      "paragraphs": [
+        "Walsh left his food cart on the path beside the lake every weekend for fifteen years without asking anyone. A prescriptive easement requires open, continuous, and adverse use for the statutory period. Walsh has likely acquired a prescriptive easement."
+      ],
+      "expect": {
+        "badge": "WARNING_APPLICATION_WITHOUT_RULE",
+        "labels": ["APPLICATION", "RULE", "CONCLUSION"]
+      }
+    },
+    {
+      "id": "subjects/conlaw-commerce-complete-irac",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The issue is whether the registry provision exceeds Congress's commerce power. Under United States v. Lopez, 514 U.S. 549 (1995), Congress may regulate the channels and instrumentalities of interstate commerce and activities that substantially affect it. The registry tracks purely local, noneconomic conduct without any jurisdictional element tying it to interstate commerce. Therefore, the provision is likely unconstitutional."
+      ],
+      "expect": {
+        "badge": "COMPLETE_IRAC",
+        "labels": ["ISSUE", "RULE", "APPLICATION", "CONCLUSION"]
+      }
+    },
+    {
+      "id": "subjects/conlaw-speech-complete-crac",
+      "framework": "AUTO",
+      "paragraphs": [
+        "The ordinance is likely invalid under the First Amendment. A content-based restriction on speech must satisfy strict scrutiny. The ordinance bans only signs criticizing the city council, a facially content-based distinction. Therefore, the ordinance is likely invalid."
+      ],
+      "expect": {
+        "badge": "COMPLETE_CRAC",
+        "effective_framework": "CRAC",
+        "labels": ["CONCLUSION", "RULE", "APPLICATION", "CONCLUSION"]
+      }
+    }
+  ]
+}

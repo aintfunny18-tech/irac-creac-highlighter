@@ -39,6 +39,10 @@ import {
   STRUCT_LABEL_RE,
 } from "./lexicon.js";
 import { hasCitation, RULE_CITATION_PATTERNS } from "./citations.js";
+import {
+  CITE_GUARDED_APPLICATION_PHRASES,
+  isRuleFramedSentence,
+} from "./lexicon-subjects.js";
 import { containsAny, startsWithAny, words } from "./util.js";
 
 // ---------------------------------------------------------------------------
@@ -124,7 +128,6 @@ const GENERIC_INDEFINITE_RE =
   /\b(?:a|an)\s+(?:defendant|plaintiff|party|person|individual|court|courts)\b/;
 const COURTS_RULE_FRAME_RE =
   /^courts?\s+(?:apply|require|hold|have|recognize|employ|use|analyze|consider|balance|weigh)\b/;
-const CITE_GUARDED_APP = new Set(["is an adequate", "is not an adequate", "is amenable"]);
 const IT_HAS_NO_RE = /^it\s+has\s+(?:no|never|not)\b/;
 const THE_COURT_OPENER_RE = /^the\s+court\b/;
 const CLAIM_FAILS_RE = /\bclaims?\b.{0,80}\bfails?\b/;
@@ -330,9 +333,17 @@ export const SENTENCE_RULES = [
       if (!trigger) return null;
       // Guard 1: "Courts apply/require…" is a rule-invoking frame.
       const courtsRuleFrame = COURTS_RULE_FRAME_RE.test(ctx.sl);
-      // Guard 2: state-assertion phrases embedded in citation-heavy rule
-      // statements ("Under X v. Y, Germany is an adequate forum…").
-      if (courtsRuleFrame || (CITE_GUARDED_APP.has(trigger) && hasCitation(ctx.s))) {
+      // Guard 2: doctrinal-test wording embedded in a citation-bearing rule
+      // statement ("Under Rule 13(a)(1), a counterclaim is compulsory if it
+      // arises out of the same transaction…") states the rule, not its
+      // application. See lexicon-subjects.js.
+      const citedRuleFrame =
+        CITE_GUARDED_APPLICATION_PHRASES.has(trigger) &&
+        hasCitation(ctx.s) &&
+        (isRuleFramedSentence(ctx.sl) ||
+          GENERIC_SUBJECT_RE.test(ctx.s) ||
+          ["is an adequate", "is not an adequate", "is amenable"].includes(trigger));
+      if (courtsRuleFrame || citedRuleFrame) {
         return null; // fall through to RULE detection
       }
       return { label: "APPLICATION", trigger };
@@ -446,6 +457,18 @@ export const SENTENCE_RULES = [
       "It states the governing legal standard in general terms (citations, standard phrases, or a generic legal subject).",
     match(ctx) {
       const { total, strong, trigger } = countRuleSignals(ctx.s, ctx.sl);
+      // A hedged final sentence with no strong rule anchor (no citation, no
+      // standard phrase, no court-practice pattern, no generic subject) is a
+      // predicted outcome, not a rule — even if it has definitional shape
+      // ("The promise is likely unenforceable…"). Let conclusion rules take it.
+      const hedgedFinalOutcome =
+        ctx.idx === ctx.total - 1 &&
+        Boolean(containsAny(ctx.sl, HEDGE_WORDS)) &&
+        !hasCitation(ctx.s) &&
+        !containsAny(ctx.sl, RULE_STANDARD_PHRASES) &&
+        !RULE_REGEX_PATTERNS.some((p) => p.test(ctx.s)) &&
+        !GENERIC_SUBJECT_RE.test(ctx.s);
+      if (hedgedFinalOutcome) return null;
       if (total >= 2) return { label: "RULE", trigger };
       // 1-signal fallback: only when the signal is strong (not just vocab).
       if (total === 1 && strong >= 1) {
@@ -520,6 +543,14 @@ export function classifySentence(sentence, idxInPara, totalInPara, framework, pa
     if (result) {
       return { label: result.label, trigger: result.trigger, ruleId: rule.id };
     }
+  }
+  // Heading-like fragments ("1.", "Negligence — Duty of Care", "Question 2:")
+  // get a dedicated explanation instead of the generic unclassified coaching.
+  const isHeading =
+    /^[\d\s.()]+$/.test(ctx.s) ||
+    (words(ctx.s).length <= 8 && (/[:—]$/.test(ctx.s) || !/[.!?]["')\]]*$/.test(ctx.s)));
+  if (isHeading) {
+    return { label: "UNCLASSIFIED", trigger: "", ruleId: "heading" };
   }
   return { label: "UNCLASSIFIED", trigger: "", ruleId: "unclassified" };
 }

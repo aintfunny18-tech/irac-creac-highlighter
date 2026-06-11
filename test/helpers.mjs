@@ -30,16 +30,3 @@ export function loadCorpusCases({ includeLocal = true } = {}) {
   return cases;
 }
 
-/** Load golden Python output keyed by case id (committed + local if present). */
-export function loadGolden() {
-  const golden = {};
-  const paths = [
-    join(TEST_DIR, "golden", "python-golden.json"),
-    join(TEST_DIR, "corpus-local", "python-golden-local.json"),
-  ];
-  for (const path of paths) {
-    if (!existsSync(path)) continue;
-    Object.assign(golden, loadJson(path));
-  }
-  return golden;
-}

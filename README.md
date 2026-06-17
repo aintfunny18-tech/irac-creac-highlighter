@@ -1,4 +1,4 @@
-# Legal Writing Structure Coach
+# Legal Writing Structure Practice
 
 **Live app: https://aintfunny18-tech.github.io/irac-creac-highlighter/**
 

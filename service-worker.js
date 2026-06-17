@@ -3,7 +3,7 @@
 // with offline fallback, cache-first for same-origin assets, scoped URLs so
 // the worker behaves under the GitHub Pages subpath.
 
-const CACHE_NAME = "lwsc-pwa-2026-06-11-v1";
+const CACHE_NAME = "lwsc-pwa-2026-06-17-v1";
 
 const RUNTIME_ASSETS = [
   "index.html",

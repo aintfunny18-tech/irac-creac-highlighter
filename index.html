@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Second Read has moved</title>
+  <meta http-equiv="refresh" content="0; url=https://aintfunny18-tech.github.io/second-read/" />
+  <link rel="canonical" href="https://aintfunny18-tech.github.io/second-read/" />
+  <style>
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: #f4f6f8; color: #111827;
+      display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 1rem; text-align: center; }
+    main { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 2rem; max-width: 420px; }
+    a { color: #164e63; font-weight: 700; }
+  </style>
+  <script>
+    // Retire the old app's offline cache, then forward to the new address,
+    // keeping any path, query, or fragment from the old link.
+    (async function () {
+      try {
+        if ("serviceWorker" in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map((r) => r.unregister()));
+        }
+        if (window.caches) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+        }
+      } catch (e) { /* forwarding matters more than cleanup */ }
+      const rest = location.pathname.replace(/^\/irac-creac-highlighter\/?/, "") + location.search + location.hash;
+      location.replace("https://aintfunny18-tech.github.io/second-read/" + rest);
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Second Read has moved</h1>
+    <p>The IRAC/CREAC structure check is now at
+      <a href="https://aintfunny18-tech.github.io/second-read/">aintfunny18-tech.github.io/second-read</a>.
+      Please update your bookmark.</p>
+  </main>
+</body>
+</html>
